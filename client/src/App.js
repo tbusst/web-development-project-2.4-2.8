@@ -1,7 +1,18 @@
+import {
+    BrowserRouter,
+    Routes,
+    Route,
+} from "react-router-dom";
+
+import Home from "./Pages/Home/Home";
+import './App.scss'
+
 export default function App() {
     return (
-        <div className='Header'>
-            <h1>Hello World</h1>
-        </div>
+        <BrowserRouter>
+            <Routes>
+                <Route path="/" element={<Home />} />
+            </Routes>
+        </BrowserRouter>
     );
 };
