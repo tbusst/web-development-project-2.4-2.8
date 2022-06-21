@@ -1,16 +1,39 @@
-//import './Home.scss'
+import Post from '../../Components/Post';
+import data from '../../data'
 
 export default function Home() {
+    const posts = data.map(postData => {
+        const { desc, image, likes, dislikes, tags } = postData
+        return (
+            <Post
+                desc={desc}
+                image={image}
+                likes={likes}
+                dislikes={dislikes}
+                tags={tags}
+            />
+        )
+    })
+
     return (
-        <div className='Home'>
-            <button id='guest'>Continue as guest</button>
-            <div className='Login'>
-                <h1>Memor.ie</h1>
-                <button>Sign up</button>
-                <p>Already have an account?</p>
-                <a href='/'>Sign in</a>
-            </div>
-            <p id='attribution'>Photo by sarandy westfall on Unsplash</p>
-        </div>
+        <main className='Home'>
+            <aside>
+                <button>Open</button>
+                <div className='user-info'>
+                    <img src='image goes here' alt='profile' />
+                    <p>username</p>
+                </div>
+                <hr />
+                <ul>
+                    <li>
+                        <button>Profile</button>
+                    </li>
+                    <li>
+                        <button>Home</button>
+                    </li>
+                </ul>
+            </aside>
+            <section>{posts}</section>
+        </main>
     );
 };

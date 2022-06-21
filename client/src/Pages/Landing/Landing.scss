@@ -1,0 +1,42 @@
+.Landing {
+    background-image: (url(../../Images/hero.jpeg));
+    background-size: cover;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $yellow;
+
+    #guest {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        color: white;
+        background-color: $dark-navy;
+    }
+
+    #attribution {
+        position: absolute;
+        left: 10px;
+        bottom: 10px;
+    }
+
+    .Login {
+        text-align: center;
+        justify-content: center;
+
+        button {
+            background-color: $yellow;
+            color: white;
+        }
+
+        p {
+            color: $light-navy;
+        }
+
+        a {
+            color: $yellow;
+        }
+    }
+}
