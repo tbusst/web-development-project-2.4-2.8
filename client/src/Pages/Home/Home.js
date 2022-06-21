@@ -1,3 +1,5 @@
+import { FiMenu } from 'react-icons/fi'
+
 import Post from '../../Components/Post';
 import data from '../../data'
 
@@ -18,7 +20,9 @@ export default function Home() {
     return (
         <main className='Home'>
             <aside>
-                <button>Open</button>
+                <button>
+                    <FiMenu />
+                </button>
                 <div className='user-info'>
                     <img src='image goes here' alt='profile' />
                     <p>username</p>
@@ -33,7 +37,9 @@ export default function Home() {
                     </li>
                 </ul>
             </aside>
-            <section>{posts}</section>
+            <section className='Posts'>
+                {posts}
+            </section>
         </main>
     );
 };
