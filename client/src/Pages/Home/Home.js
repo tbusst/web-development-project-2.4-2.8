@@ -3,6 +3,8 @@ import { FiMenu } from 'react-icons/fi'
 import Post from '../../Components/Post';
 import data from '../../data'
 
+import placeholder from '../../Images/placeholder.png'
+
 export default function Home() {
     const posts = data.map(postData => {
         const { desc, image, likes, dislikes, tags } = postData
@@ -20,22 +22,24 @@ export default function Home() {
     return (
         <main className='Home'>
             <aside>
-                <button>
+                <button className='menu-button'>
                     <FiMenu />
+                    <div className='Sidebar'>
+                        <div className='user-info'>
+                            <img src={placeholder} alt='profile' />
+                            <p>username</p>
+                        </div>
+                        <hr />
+                        <ul>
+                            <li>
+                                <button>Profile</button>
+                            </li>
+                            <li>
+                                <button>Home</button>
+                            </li>
+                        </ul>
+                    </div>
                 </button>
-                <div className='user-info'>
-                    <img src='image goes here' alt='profile' />
-                    <p>username</p>
-                </div>
-                <hr />
-                <ul>
-                    <li>
-                        <button>Profile</button>
-                    </li>
-                    <li>
-                        <button>Home</button>
-                    </li>
-                </ul>
             </aside>
             <section className='Posts'>
                 {posts}
