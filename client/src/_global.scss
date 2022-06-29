@@ -1,5 +1,66 @@
 $yellow: #e3b706;
+$light-yellow: #ffcc01;
 $light-navy: #5a7084;
 $mid-navy: #485969;
 $dark-navy: #242b3e;
 $navy: #44475b;
+
+@keyframes yellow-in {
+    from {
+        background-color: $yellow;
+    }
+
+    to {
+        background-color: $light-yellow;
+    }
+}
+
+@keyframes yellow-out {
+    from {
+        background-color: $light-yellow;
+    }
+
+    to {
+        background-color: $yellow;
+    }
+}
+
+@keyframes yellow-text-in {
+    from {
+        color: $yellow;
+    }
+
+    to {
+        color: $light-yellow;
+    }
+}
+
+@keyframes yellow-text-out {
+    from {
+        color: $light-yellow;
+    }
+
+    to {
+        color: $yellow;
+    }
+}
+
+@keyframes navy-in {
+    from {
+        background-color: $dark-navy;
+    }
+
+    to {
+        background-color: $navy;
+    }
+}
+
+@keyframes navy-out {
+    from {
+        background-color: $navy;
+    }
+
+    to {
+        background-color: $dark-navy;
+    }
+}

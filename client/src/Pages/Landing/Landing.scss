@@ -1,6 +1,7 @@
 .Landing {
     background-image: (url(../../Images/hero.jpeg));
     background-size: cover;
+    background-position: 0 -40px;
     height: 100vh;
     width: 100vw;
     display: flex;
@@ -14,29 +15,91 @@
         top: 10px;
         color: white;
         background-color: $dark-navy;
+        padding: 14px;
+        font-size: 15px;
+        display: flex;
+        justify-content: center;
+        border-radius: 5px;
+        animation: navy-out 0.5s;
+
+        svg {
+            margin-right: 10px;
+            font-size: 18px;
+        }
+    }
+
+    #guest:hover {
+        background-color: $navy;
+        animation: navy-in 0.5s;
+        cursor: pointer;
     }
 
     #attribution {
         position: absolute;
-        left: 10px;
-        bottom: 10px;
+        left: 2px;
+        bottom: 2px;
+        font-size: 13px;
+        display: flex;
+
+        a {
+            animation: yellow-text-out 0.5s;
+            margin: 0 4px;
+            color: $yellow;
+        }
+
+        a:hover {
+            animation: yellow-text-in 0.5s;
+            color: $light-yellow;
+        }
     }
 
     .Login {
         text-align: center;
         justify-content: center;
 
+        h1 {
+            font-size: 90px;
+            margin: 0;
+        }
+
         button {
             background-color: $yellow;
+            padding: 15px 60px;
+            border-radius: 5px;
+            font-size: 20px;
             color: white;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            animation: yellow-out 0.5s;
+
+            svg {
+                margin-right: 10px;
+                font-size: 23px;
+            }
+        }
+
+        button:hover {
+            animation: yellow-in 0.5s;
+            background-color: $light-yellow;
+            cursor: pointer;
         }
 
         p {
+            margin: 5px 0;
             color: $light-navy;
         }
 
         a {
+            animation: yellow-text-out 0.5s;
+            margin: 0 4px;
+            text-decoration: none;
             color: $yellow;
+        }
+
+        a:hover {
+            animation: yellow-text-in 0.5s;
+            color: $light-yellow;
         }
     }
 }

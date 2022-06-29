@@ -1,4 +1,6 @@
-import { FiMenu } from 'react-icons/fi'
+import { FiMenu } from 'react-icons/fi';
+import { FaHome } from 'react-icons/fa';
+import { BsFillPersonFill } from 'react-icons/bs';
 
 import Post from '../../Components/Post';
 import data from '../../data'
@@ -19,6 +21,11 @@ export default function Home() {
         )
     })
 
+    const userinfo = {
+        'username': 'username',
+        'profile': placeholder
+    }
+
     return (
         <main className='Home'>
             <aside>
@@ -26,16 +33,18 @@ export default function Home() {
                     <FiMenu />
                     <div className='Sidebar'>
                         <div className='user-info'>
-                            <img src={placeholder} alt='profile' />
-                            <p>username</p>
+                            <img src={userinfo.profile} alt='profile' />
+                            <p>{userinfo.username}</p>
                         </div>
                         <hr />
                         <ul>
                             <li>
-                                <button>Profile</button>
+                                <BsFillPersonFill />
+                                <a href='/placeholder'>Profile</a>
                             </li>
                             <li>
-                                <button>Home</button>
+                                <FaHome />
+                                <a href='/'>Home</a>
                             </li>
                         </ul>
                     </div>
