@@ -1,14 +1,28 @@
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+
 import { FiMenu } from 'react-icons/fi';
 import { FaHome } from 'react-icons/fa';
 import { BsFillPersonFill } from 'react-icons/bs';
 
 import Post from '../../Components/Post';
-import data from '../../data'
 
 import placeholder from '../../Images/placeholder.png'
 
 export default function Home() {
-    const posts = data.map(postData => {
+    const [postsData, setPosts] = useState([]);
+
+    useEffect(() => {
+        axios.get('/api/posts')
+            .then(res => res.data)
+            .then(posts => {
+                console.log(posts)
+                setPosts(posts)
+            })
+    }, [])
+
+    const posts = postsData.map(postData => {
+        console.log(postData)
         const { desc, image, likes, dislikes, tags } = postData
         return (
             <Post
@@ -25,6 +39,7 @@ export default function Home() {
         'username': 'username',
         'profile': placeholder
     }
+
 
     return (
         <main className='Home'>
