@@ -13,16 +13,14 @@ export default function Home() {
     const [postsData, setPosts] = useState([]);
 
     useEffect(() => {
-        axios.get('/api/posts')
+        axios.get('http://localhost:4000/api/posts')
             .then(res => res.data)
             .then(posts => {
-                console.log(posts)
                 setPosts(posts)
             })
     }, [])
 
     const posts = postsData.map(postData => {
-        console.log(postData)
         const { desc, image, likes, dislikes, tags } = postData
         return (
             <Post
