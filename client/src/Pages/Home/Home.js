@@ -13,7 +13,7 @@ export default function Home() {
     const [postsData, setPosts] = useState([]);
 
     useEffect(() => {
-        axios.get('http://localhost:4000/api/posts')
+        axios.get('https://web-development-project-server.herokuapp.com/api/posts')
             .then(res => res.data)
             .then(posts => {
                 setPosts(posts)
