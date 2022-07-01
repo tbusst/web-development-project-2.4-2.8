@@ -1,0 +1,78 @@
+aside {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 18vw;
+
+    button {
+        color: $yellow;
+        font-size: 25px;
+        background-color: $dark-navy;
+    }
+
+    #menu-button {
+        border-radius: 5px;
+        font-size: 45px;
+        height: 50px;
+        width: 50px;
+        padding: 0;
+        left: -2px;
+        background-color: $dark-navy;
+        position: relative;
+    }
+
+    .Sidebar {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        background-color: $dark-navy;
+        height: 100vh;
+        width: 18vw;
+        top: -50px;
+        font-size: 25px;
+        justify-content: left;
+        text-align: left;
+        color: $yellow;
+
+        hr {
+            border: 1px solid $mid-navy;
+            width: 80%;
+            margin: 10px auto 0;
+        }
+
+        ul {
+            padding: 0 10%;
+            list-style: none;
+
+            li {
+                display: flex;
+                align-items: center;
+                margin: 15px 0;
+
+                a {
+                    margin-left: 10px;
+                    font-size: 20px;
+                    text-decoration: underline;
+                    text-underline-offset: 5px;
+                    color: $yellow;
+                }
+            }
+        }
+
+        .user-info {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            margin-top: 20px;
+
+            img {
+                width: 120px;
+                height: 120px;
+                border-radius: 100%;
+            }
+        }
+    }
+}
