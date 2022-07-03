@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 
 
-import Post from '../../Components/Post';
+import Post from '../../Components/Post/Post';
 import Sidebar from '../../Components/Sidebar/Sidebar';
 
 import placeholder from '../../Images/placeholder.png'
@@ -43,7 +43,14 @@ export default function Home() {
                 profile={userinfo.profile}
             />
             <section className='Posts'>
-                {posts}
+                {posts.length !== 0 && posts}
+                {!posts.length &&
+                    <img
+                        className='loading-image'
+                        src={require('../../Images/loading.jpg')}
+                        alt='loading'
+                    />
+                }
             </section>
         </main>
     );

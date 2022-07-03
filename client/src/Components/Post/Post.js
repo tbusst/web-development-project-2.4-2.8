@@ -7,7 +7,7 @@ export default function Post(props) {
     const { desc, image, likes, dislikes, tags } = props
     return (
         <article className='Post'>
-            <img src={require(`../Images/${image}`)} alt={desc} />
+            <img src={require(`../../Images/${image}`)} alt={desc} />
             <div className='Post-info'>
                 <p>{desc}</p>
                 <div className='Post-stats'>

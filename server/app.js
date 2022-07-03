@@ -25,6 +25,10 @@ app.use(function (req, res, next) {
   next();
 });
 
+app.get('/', (req, res) => {
+  res.redirect('/api');
+})
+
 app.use('/api', apiRouter);
 app.use('/api/posts', postsRouter);
 
