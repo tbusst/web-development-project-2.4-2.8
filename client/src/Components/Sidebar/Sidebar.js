@@ -39,7 +39,7 @@ export default function Sidebar(props) {
                     <ul>
                         <li>
                             <BsFillPersonFill />
-                            <a href='/placeholder'>Profile</a>
+                            <a href='/profile'>Profile</a>
                         </li>
                         <li>
                             <FaHome />

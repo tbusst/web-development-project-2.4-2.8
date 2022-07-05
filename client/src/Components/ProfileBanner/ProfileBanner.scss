@@ -1,0 +1,42 @@
+.ProfileBanner {
+    background-color: $dark-navy;
+    padding: 70px;
+    margin-top: 50px;
+
+    .user-info {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        img {
+            border-radius: 100%;
+            height: 150px;
+            width: 150px;
+        }
+
+        p {
+            color: $yellow;
+            font-size: 28px;
+            margin: 5px 0;
+            font-weight: lighter;
+        }
+    }
+
+    .user-stats {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        h3 {
+            color: $light-navy;
+            font-size: 19px;
+            font-weight: lighter;
+        }
+
+        .vr {
+            height: 18px;
+            margin: 0 10px;
+            border-left: 2px solid $yellow;
+        }
+    }
+}
