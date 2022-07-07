@@ -17,14 +17,14 @@ export default function Home() {
                 <h1>Memor.ie</h1>
                 <button
                     onClick={
-                        () => window.location.href = '/placeholder'
+                        () => window.location.href = '/login?mode=signup'
                     }
                 >
                     <BsFillPersonPlusFill />
                     Sign up
                 </button>
                 <p>Already have an account?</p>
-                <a href='/placeholder'>Sign in</a>
+                <a href='/login?mode=signin'>Sign in</a>
             </section>
             <p id='attribution'>
                 <p>Photo by</p>
