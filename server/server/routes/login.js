@@ -28,7 +28,6 @@ router.post('/', function (req, res) {
         const email = req.body.email;
         const password = req.body.password;
         const mode = req.body.mode;
-        console.log(req.body)
 
         switch (mode) {
             case 'signup':

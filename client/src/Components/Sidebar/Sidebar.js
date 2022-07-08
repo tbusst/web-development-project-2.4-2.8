@@ -53,8 +53,7 @@ export default function Sidebar(props) {
                                         `${process.env.REACT_APP_SERVER_URL}/api/login`,
                                         { logout: true }
                                     )
-                                        .then(res => console.log(res))
-                                        .then(window.location.href = '/home')
+                                        .then(res => window.location.href = '/home')
                                 }
                             }>
                                 Log out
