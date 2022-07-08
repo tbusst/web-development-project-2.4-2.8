@@ -16,9 +16,10 @@ export default function Login() {
             {
                 email: email,
                 password: password,
-                mode: urlParams.get('mode')
+                mode: urlParams.get('mode'),
+                logout: false
             })
-            .then(res => console.log(res.data))
+            .then(res => window.location.href = '/home')
             .catch(err => setError(err.response.data))
     }
 
@@ -28,8 +29,8 @@ export default function Login() {
                 <section className='SignUp-form'>
                     <h1>Sign Up</h1>
                     <form onSubmit={handleSubmit}>
-                        <label htmlFor='username'>Username</label>
-                        <input type='text' id='username' onChange={e => {
+                        <label htmlFor='email'>Email</label>
+                        <input type='text' id='email' onChange={e => {
                             setEmail(e.target.value)
                         }} />
                         <label htmlFor='password'>Password</label>
@@ -39,13 +40,15 @@ export default function Login() {
                         <button type='submit'>Sign Up</button>
                     </form>
                     <p className='error'>{error}</p>
+                    <p>Already have an account?</p>
+                    <a href='/login?mode=signin'>Sign in</a>
                 </section>}
             {urlParams.get('mode') === 'signin' &&
                 <section className='SignIn-form'>
                     <h1>Sign In</h1>
                     <form onSubmit={handleSubmit}>
-                        <label htmlFor='username'>Username</label>
-                        <input type='text' id='username' onChange={e => {
+                        <label htmlFor='email'>Email</label>
+                        <input type='text' id='email' onChange={e => {
                             setEmail(e.target.value)
                         }
                         } />
@@ -55,6 +58,9 @@ export default function Login() {
                         }
                         } />
                         <button type='submit'>Sign In</button>
+                        <p className='error'>{error}</p>
+                        <p>Dont have an account?</p>
+                        <a href='/login?mode=signup'>Sign up</a>
                     </form>
                 </section>
             }

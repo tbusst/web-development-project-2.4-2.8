@@ -1,7 +1,12 @@
 import express from 'express';
 var router = express.Router();
-import { initializeApp } from 'firebase/app';
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import { firebase, initializeApp } from 'firebase/app';
+import {
+    getAuth,
+    signOut,
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword
+} from 'firebase/auth';
 require('dotenv').config()
 
 const firebaseConfig = {
@@ -19,40 +24,54 @@ const auth = getAuth();
 
 /* GET home page. */
 router.post('/', function (req, res) {
-    const email = req.body.email;
-    const password = req.body.password;
-    const mode = req.body.mode;
-    console.log(req.body)
+    if (!req.body.logout) {
+        const email = req.body.email;
+        const password = req.body.password;
+        const mode = req.body.mode;
+        console.log(req.body)
 
-    switch (mode) {
-        case 'signup':
-            createUserWithEmailAndPassword(auth, email, password)
-                .then((userCredentials) => {
-                    const user = userCredentials.user;
-                    res.send(user);
-                })
-                .catch((error) => {
-                    const errorMessage = error.message;
-                    res.status(401).send(errorMessage);
-                }
-                );
-            break;
+        switch (mode) {
+            case 'signup':
+                createUserWithEmailAndPassword(auth, email, password)
+                    .then((userCredentials) => {
+                        const user = userCredentials.user;
+                        res.send(user);
+                    })
+                    .catch((error) => {
+                        const errorMessage = error.message;
+                        res.status(401).send(errorMessage);
+                    }
+                    );
+                break;
 
-        case 'signin':
-            signInWithEmailAndPassword(auth, email, password)
-                .then((userCredentials) => {
-                    const user = userCredentials.user;
-                    res.send(user);
-                }
-                ).catch((error) => {
-                    const errorMessage = error.message;
-                    res.status(401).send(errorMessage);
-                }
-                );
-            break;
-        default:
-            break;
+            case 'signin':
+                signInWithEmailAndPassword(auth, email, password)
+                    .then((userCredentials) => {
+                        const user = userCredentials.user;
+                        res.send(user);
+                    }
+                    ).catch((error) => {
+                        const errorMessage = error.message;
+                        res.status(401).send(errorMessage);
+                    }
+                    );
+                break;
+            default:
+                break;
+        }
+    } else {
+        signOut(auth).then(() => {
+            // Sign-out successful.
+            res.send('Sign-out successful.')
+        }).catch((error) => {
+            // An error happened.
+            res.status(error)
+        });
     }
 });
 
-export default router;
+router.get('/', function (req, res) {
+    res.send(auth.currentUser)
+})
+
+export default router;  

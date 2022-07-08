@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 
-
 import Post from '../../Components/Post/Post';
 import Sidebar from '../../Components/Sidebar/Sidebar';
 
@@ -9,6 +8,7 @@ import placeholder from '../../Images/placeholder.png'
 
 export default function Home() {
     const [postsData, setPosts] = useState([]);
+    const [email, setEmail] = useState([]);
 
     useEffect(() => {
         axios.get(`${process.env.REACT_APP_SERVER_URL}/api/posts`)
@@ -16,6 +16,9 @@ export default function Home() {
             .then(posts => {
                 setPosts(posts)
             })
+
+        axios.get('http://localhost:3001/api/login')
+            .then(res => setEmail(res.data.email))
     }, [])
 
     const posts = postsData.map(postData => {
@@ -39,7 +42,7 @@ export default function Home() {
     return (
         <main className='Home'>
             <Sidebar
-                username={userinfo.username}
+                username={email}
                 profile={userinfo.profile}
             />
             <section className='Posts'>

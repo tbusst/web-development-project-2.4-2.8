@@ -31,35 +31,48 @@ var auth = (0, _auth.getAuth)();
 /* GET home page. */
 
 router.post('/', function (req, res) {
-  var email = req.body.email;
-  var password = req.body.password;
-  var mode = req.body.mode;
-  console.log(req.body);
+  if (!req.body.logout) {
+    var email = req.body.email;
+    var password = req.body.password;
+    var mode = req.body.mode;
+    console.log(req.body);
 
-  switch (mode) {
-    case 'signup':
-      (0, _auth.createUserWithEmailAndPassword)(auth, email, password).then(function (userCredentials) {
-        var user = userCredentials.user;
-        res.send(user);
-      })["catch"](function (error) {
-        var errorMessage = error.message;
-        res.status(401).send(errorMessage);
-      });
-      break;
+    switch (mode) {
+      case 'signup':
+        (0, _auth.createUserWithEmailAndPassword)(auth, email, password).then(function (userCredentials) {
+          var user = userCredentials.user;
+          res.send(user);
+        })["catch"](function (error) {
+          var errorMessage = error.message;
+          res.status(401).send(errorMessage);
+        });
+        break;
 
-    case 'signin':
-      (0, _auth.signInWithEmailAndPassword)(auth, email, password).then(function (userCredentials) {
-        var user = userCredentials.user;
-        res.send(user);
-      })["catch"](function (error) {
-        var errorMessage = error.message;
-        res.status(401).send(errorMessage);
-      });
-      break;
+      case 'signin':
+        (0, _auth.signInWithEmailAndPassword)(auth, email, password).then(function (userCredentials) {
+          var user = userCredentials.user;
+          res.send(user);
+        })["catch"](function (error) {
+          var errorMessage = error.message;
+          res.status(401).send(errorMessage);
+        });
+        break;
 
-    default:
-      break;
+      default:
+        break;
+    }
+  } else {
+    (0, _auth.signOut)(auth).then(function () {
+      // Sign-out successful.
+      res.send('Sign-out successful.');
+    })["catch"](function (error) {
+      // An error happened.
+      res.status(error);
+    });
   }
+});
+router.get('/', function (req, res) {
+  res.send(auth.currentUser);
 });
 var _default = router;
 exports["default"] = _default;
