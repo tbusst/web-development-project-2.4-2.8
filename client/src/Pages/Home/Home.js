@@ -17,7 +17,7 @@ export default function Home() {
                 setPosts(posts)
             })
 
-        axios.get('http://localhost:3001/api/login')
+        axios.get(`${process.env.REACT_APP_SERVER_URL}/api/login`)
             .then(res => setEmail(res.data.email))
     }, [])
 

@@ -54,6 +54,7 @@ export default function Sidebar(props) {
                                         { logout: true }
                                     )
                                         .then(res => console.log(res))
+                                        .then(window.location.href = '/home')
                                 }
                             }>
                                 Log out
