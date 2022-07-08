@@ -1,18 +1,7 @@
-import { initializeApp } from 'firebase/app';
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 import { useState } from 'react';
+import axios from 'axios';
 
 export default function Login() {
-    const firebaseConfig = {
-        apiKey: "AIzaSyDT-oSg3hGNYU6xmcpBVQl__FP1B8QpWik",
-        authDomain: "web-development-project-2-4.firebaseapp.com",
-        projectId: "web-development-project-2-4",
-        storageBucket: "web-development-project-2-4.appspot.com",
-        messagingSenderId: "956772061515",
-        appId: "1:956772061515:web:5b801d9f372ad2c77618ce",
-        measurementId: "G-YHDGCMMRXB"
-    };
-
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
@@ -22,42 +11,16 @@ export default function Login() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const auth = getAuth();
 
-        switch (urlParams.get('mode')) {
-            case 'signup':
-                createUserWithEmailAndPassword(auth, email, password)
-                    .then((userCredentials) => {
-                        const user = userCredentials.user;
-                        console.log(user);
-                    })
-                    .catch((error) => {
-                        const errorCode = error.code;
-                        const errorMessage = error.message;
-                        setError(errorMessage)
-                        console.log(errorCode, errorMessage);
-                    }
-                    );
-                break;
-
-            case 'signin':
-                signInWithEmailAndPassword(auth, email, password)
-                    .then((userCredentials) => {
-                        const user = userCredentials.user;
-                        console.log(user);
-                    }
-                    ).catch((error) => {
-                        const errorCode = error.code;
-                        const errorMessage = error.message;
-                        setError(errorMessage)
-                        console.log(errorCode, errorMessage);
-                    }
-                    );
-                break;
-        }
+        axios.post(`${process.env.REACT_APP_SERVER_URL}/api/login`,
+            {
+                email: email,
+                password: password,
+                mode: urlParams.get('mode')
+            })
+            .then(res => console.log(res.data))
+            .catch(err => setError(err.response.data))
     }
-
-    const app = initializeApp(firebaseConfig);
 
     return (
         <main className='Login'>
