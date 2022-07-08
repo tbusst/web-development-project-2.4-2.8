@@ -2,15 +2,16 @@ import express from 'express';
 var router = express.Router();
 import { initializeApp } from 'firebase/app';
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+require('dotenv').config()
 
 const firebaseConfig = {
-    apiKey: "AIzaSyDT-oSg3hGNYU6xmcpBVQl__FP1B8QpWik",
-    authDomain: "web-development-project-2-4.firebaseapp.com",
-    projectId: "web-development-project-2-4",
-    storageBucket: "web-development-project-2-4.appspot.com",
-    messagingSenderId: "956772061515",
-    appId: "1:956772061515:web:5b801d9f372ad2c77618ce",
-    measurementId: "G-YHDGCMMRXB"
+    apiKey: process.env.API_KEY,
+    authDomain: process.env.AUTH_DOMAIN,
+    projectId: process.env.PROJECT_ID,
+    storageBucket: process.env.STORAGE_BUCKET,
+    messagingSenderId: process.env.MESSAGING_SENDER_ID,
+    appId: process.env.APP_ID,
+    measurementId: process.env.MEASURMENT_ID
 };
 
 const app = initializeApp(firebaseConfig);
