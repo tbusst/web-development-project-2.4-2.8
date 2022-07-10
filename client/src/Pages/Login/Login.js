@@ -4,6 +4,9 @@ import axios from 'axios';
 export default function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [username, setUsername] = useState('');
+    // const [profile, setProfile] = useState('');
+    // const [profileName, setProfileName] = useState('');
     const [error, setError] = useState('');
 
     const queryString = window.location.search
@@ -17,6 +20,7 @@ export default function Login() {
                 email: email,
                 password: password,
                 mode: urlParams.get('mode'),
+                username: username,
                 logout: false
             })
             .then(res => window.location.href = '/home')
@@ -33,10 +37,22 @@ export default function Login() {
                         <input type='text' id='email' onChange={e => {
                             setEmail(e.target.value)
                         }} />
+                        <label htmlFor='username'>Username</label>
+                        <input type='text' id='username' onChange={e => {
+                            setUsername(e.target.value)
+                        }} />
                         <label htmlFor='password'>Password</label>
                         <input type='password' id='password' onChange={e => {
                             setPassword(e.target.value)
                         }} />
+                        {/* <label htmlFor='profile'>Profile</label>
+                        <input type='file' id='profile' onChange={async e => {
+                            let image = e.currentTarget.files[0];
+                            const data = new FormData();
+                            data.append('profileImage', e.target.files[0]);
+                            setProfile(data);
+                            setProfileName(image.name);
+                        }} /> */}
                         <button type='submit'>Sign Up</button>
                     </form>
                     <p className='error'>{error}</p>

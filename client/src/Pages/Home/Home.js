@@ -8,7 +8,8 @@ import placeholder from '../../Images/placeholder.png'
 
 export default function Home() {
     const [postsData, setPosts] = useState([]);
-    const [email, setEmail] = useState([]);
+    const [username, setUsername] = useState([]);
+    // const [profile, setProfile] = useState([]);
 
     useEffect(() => {
         axios.get(`${process.env.REACT_APP_SERVER_URL}/api/posts`)
@@ -18,7 +19,12 @@ export default function Home() {
             })
 
         axios.get(`${process.env.REACT_APP_SERVER_URL}/api/login`)
-            .then(res => setEmail(res.data.email))
+            .then(res => {
+                console.log(res)
+                setUsername(res.data.displayName)
+                //setProfile(res.data.photoURL)
+            })
+            .catch(err => console.log(err))
     }, [])
 
     const posts = postsData.map(postData => {
@@ -42,7 +48,7 @@ export default function Home() {
     return (
         <main className='Home'>
             <Sidebar
-                username={email}
+                username={username}
                 profile={userinfo.profile}
             />
             <section className='Posts'>

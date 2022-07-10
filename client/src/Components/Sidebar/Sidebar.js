@@ -44,7 +44,7 @@ export default function Sidebar(props) {
                         </li>
                         <li>
                             <FaHome />
-                            <a href='/'>Home</a>
+                            <a href='/home'>Home</a>
                         </li>
                         <li>
                             <button onClick={
@@ -53,7 +53,7 @@ export default function Sidebar(props) {
                                         `${process.env.REACT_APP_SERVER_URL}/api/login`,
                                         { logout: true }
                                     )
-                                        .then(res => window.location.href = '/home')
+                                        .then(res => window.location.href = '/')
                                 }
                             }>
                                 Log out

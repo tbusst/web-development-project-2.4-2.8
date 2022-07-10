@@ -5,9 +5,10 @@ import {
     getAuth,
     signOut,
     createUserWithEmailAndPassword,
-    signInWithEmailAndPassword
+    signInWithEmailAndPassword,
+    updateProfile
 } from 'firebase/auth';
-require('dotenv').config()
+require('dotenv').config();
 
 const firebaseConfig = {
     apiKey: process.env.API_KEY,
@@ -28,19 +29,25 @@ router.post('/', function (req, res) {
         const email = req.body.email;
         const password = req.body.password;
         const mode = req.body.mode;
+        const username = req.body.username;
+        const profile = req.body.profile;
+        const profileName = req.body.profileName;
 
         switch (mode) {
             case 'signup':
                 createUserWithEmailAndPassword(auth, email, password)
                     .then((userCredentials) => {
                         const user = userCredentials.user;
-                        res.send(user);
+                        updateProfile(user, {
+                            displayName: username
+                        }).then(() => {
+                            res.send(user);
+                        });
                     })
-                    .catch((error) => {
+                    .catch(error => {
                         const errorMessage = error.message;
                         res.status(401).send(errorMessage);
-                    }
-                    );
+                    });
                 break;
 
             case 'signin':
@@ -52,9 +59,9 @@ router.post('/', function (req, res) {
                     ).catch((error) => {
                         const errorMessage = error.message;
                         res.status(401).send(errorMessage);
-                    }
-                    );
+                    });
                 break;
+
             default:
                 break;
         }
@@ -64,13 +71,13 @@ router.post('/', function (req, res) {
             res.send('Sign-out successful.')
         }).catch((error) => {
             // An error happened.
-            res.status(error)
+            res.status(error);
         });
     }
 });
 
 router.get('/', function (req, res) {
-    res.send(auth.currentUser)
-})
+    res.send(auth.currentUser);
+});
 
 export default router;  
