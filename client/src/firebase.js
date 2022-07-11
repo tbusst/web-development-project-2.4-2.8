@@ -1,5 +1,8 @@
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
+import {
+    getAnalytics,
+    logEvent
+} from "firebase/analytics";
 import {
     getStorage,
     ref,
@@ -37,6 +40,7 @@ const signIn = (email, password) => {
         // Sign in
         signInWithEmailAndPassword(auth, email, password)
             .then((userCredentials) => {
+                logEvent(analytics, 'sign_in');
                 resolve(userCredentials.user);
             })
             .catch((error) => {
@@ -57,6 +61,7 @@ const signUp = (email, password, username, profileImage) => {
             createUserWithEmailAndPassword(auth, email, password)
                 // Update profile with username and profile image
                 .then((userCredentials) => {
+                    logEvent(analytics, 'sign_up');
                     const user = userCredentials.user;
                     uploadImage(profileImage, user.uid)
                         .then(res => {
@@ -102,6 +107,7 @@ const uploadImage = (image, userId) => {
         // Upload image
         uploadBytes(imageRef, image)
             .then(() => {
+                logEvent(analytics, 'upload_image');
                 // Get image download url
                 getDownloadURL(imageRef)
                     .then(url => resolve(url))
