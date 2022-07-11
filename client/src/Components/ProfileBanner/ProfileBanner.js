@@ -1,3 +1,4 @@
+// Profile banner component
 export default function ProfileBanner(props) {
     const { username, profile, likes, dislikes } = props;
     return (

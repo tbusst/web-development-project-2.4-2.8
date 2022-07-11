@@ -17,8 +17,6 @@ var _posts = _interopRequireDefault(require("./routes/posts"));
 
 var _api = _interopRequireDefault(require("./routes/api"));
 
-var _login = _interopRequireDefault(require("./routes/login"));
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 var app = (0, _express["default"])(); // view engine setup
@@ -41,8 +39,7 @@ app.get('/', function (req, res) {
   res.redirect('/api');
 });
 app.use('/api', _api["default"]);
-app.use('/api/posts', _posts["default"]);
-app.use('/api/login', _login["default"]); // catch 404 and forward to error handler
+app.use('/api/posts', _posts["default"]); // catch 404 and forward to error handler
 
 app.use(function (req, res, next) {
   next(createError(404));

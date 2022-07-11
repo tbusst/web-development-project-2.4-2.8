@@ -1,38 +1,32 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import { getUser } from '../../firebase';
 
 import Sidebar from '../../Components/Sidebar/Sidebar';
 import ProfileBanner from '../../Components/ProfileBanner/ProfileBanner';
 
-import placeholder from '../../Images/placeholder.png'
-
-
 export default function Profile() {
     const [username, setUsername] = useState('');
-
-    const userinfo = {
-        'username': 'User name',
-        'profile': placeholder
-    }
+    const [profileImage, setProfileImage] = useState([]);
 
     useEffect(() => {
-        axios.get(`${process.env.REACT_APP_SERVER_URL}/api/login`)
+        getUser()
             .then(res => {
-                console.log(res)
-                setUsername(res.data.displayName)
+                setUsername(res.displayName)
+                setProfileImage(res.photoURL)
             })
+            .catch(err => console.log(err))
     }, []);
 
     return (
         <main className='Profile'>
             <Sidebar
                 username={username}
-                profile={userinfo.profile}
+                profile={profileImage}
             />
             <section className='Posts'>
                 <ProfileBanner
                     username={username}
-                    profile={userinfo.profile}
+                    profile={profileImage}
                     likes={2}
                     dislikes={1}
                 />
