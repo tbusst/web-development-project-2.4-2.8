@@ -5,7 +5,6 @@ import logger from 'morgan';
 
 import postsRouter from './routes/posts';
 import apiRouter from './routes/api';
-import loginRouter from './routes/login';
 
 var app = express();
 
@@ -31,7 +30,6 @@ app.get('/', (req, res) => {
 
 app.use('/api', apiRouter);
 app.use('/api/posts', postsRouter);
-app.use('/api/login', loginRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

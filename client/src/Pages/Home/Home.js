@@ -1,16 +1,18 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import { getUser } from '../../firebase';
 
+// Components
 import Post from '../../Components/Post/Post';
 import Sidebar from '../../Components/Sidebar/Sidebar';
 
-import placeholder from '../../Images/placeholder.png'
-
+// Export the Home page
 export default function Home() {
     const [postsData, setPosts] = useState([]);
     const [username, setUsername] = useState([]);
-    // const [profile, setProfile] = useState([]);
+    const [profileImage, setProfileImage] = useState([]);
 
+    // Get posts from server and user data from Firebase
     useEffect(() => {
         axios.get(`${process.env.REACT_APP_SERVER_URL}/api/posts`)
             .then(res => res.data)
@@ -18,15 +20,16 @@ export default function Home() {
                 setPosts(posts)
             })
 
-        axios.get(`${process.env.REACT_APP_SERVER_URL}/api/login`)
+        getUser()
             .then(res => {
                 console.log(res)
-                setUsername(res.data.displayName)
-                //setProfile(res.data.photoURL)
+                setUsername(res.displayName)
+                setProfileImage(res.photoURL)
             })
             .catch(err => console.log(err))
     }, [])
 
+    // Turns post data into Post components
     const posts = postsData.map(postData => {
         const { desc, image, likes, dislikes, tags } = postData
         return (
@@ -40,16 +43,12 @@ export default function Home() {
         )
     })
 
-    const userinfo = {
-        'username': 'username',
-        'profile': placeholder
-    }
-
+    // Render the Home page
     return (
         <main className='Home'>
             <Sidebar
                 username={username}
-                profile={userinfo.profile}
+                profile={profileImage}
             />
             <section className='Posts'>
                 {posts.length !== 0 && posts}
