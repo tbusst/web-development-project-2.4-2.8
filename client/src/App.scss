@@ -1,10 +1,12 @@
+// Global styles
 @import './_global.scss';
+// Page styles
 @import './Pages/Landing/Landing.scss';
 @import './Pages/Home/Home.scss';
+// Components styles
 @import './Components/Sidebar/Sidebar.scss';
 @import './Components/Post/Post.scss';
 @import './Components/ProfileBanner/ProfileBanner.scss';
-
 
 * {
     margin: 0;

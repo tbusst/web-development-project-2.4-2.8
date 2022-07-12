@@ -1,3 +1,4 @@
+// Placeholder data
 const data = () => {
     return (
         [
@@ -71,4 +72,5 @@ const data = () => {
     )
 }
 
+// Export the data
 exports.data = data;

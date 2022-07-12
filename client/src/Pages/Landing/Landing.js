@@ -1,7 +1,8 @@
 import { BsFillPersonPlusFill } from 'react-icons/bs'
 import { FaArrowRight } from 'react-icons/fa'
 
-export default function Home() {
+// Export the Landing page
+export default function Landing() {
     return (
         <main className='Landing'>
             <button
@@ -14,6 +15,7 @@ export default function Home() {
                 Continue as guest
             </button>
             <section className='Login'>
+                {/* Sign up */}
                 <h1>Memor.ie</h1>
                 <button
                     onClick={
@@ -23,9 +25,11 @@ export default function Home() {
                     <BsFillPersonPlusFill />
                     Sign up
                 </button>
+                {/* Sign in */}
                 <p>Already have an account?</p>
                 <a href='/login?mode=signin'>Sign in</a>
             </section>
+            {/* Photo by Sarandy on Unsplash */}
             <p id='attribution'>
                 <p>Photo by</p>
                 <a href='https://unsplash.com/@sarandywestfall_photo?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText'

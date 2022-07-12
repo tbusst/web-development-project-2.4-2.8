@@ -1,3 +1,4 @@
+// Colors
 $light-yellow: #ffcc01;
 $yellow: #e3b706;
 $light-navy: #5a7084;
@@ -5,6 +6,7 @@ $mid-navy: #485969;
 $navy: #44475b;
 $dark-navy: #242b3e;
 
+// Animations
 @keyframes yellow-in {
     from {
         background-color: $yellow;

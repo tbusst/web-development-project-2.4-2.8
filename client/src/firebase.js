@@ -1,3 +1,4 @@
+// Import firebase functions
 import { initializeApp } from "firebase/app";
 import {
     getAnalytics,

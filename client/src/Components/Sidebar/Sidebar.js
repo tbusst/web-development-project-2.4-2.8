@@ -1,21 +1,30 @@
+// Import icons
 import { FiMenu } from 'react-icons/fi';
 import { FaHome } from 'react-icons/fa';
 import { BsFillPersonFill } from 'react-icons/bs';
+
+// Import react
 import { useEffect, useState } from 'react';
+
+// Import firebase functions
 import { signOutUser } from '../../firebase';
 
+// Export the Sidebar component
 export default function Sidebar(props) {
     const { username, profile } = props;
     const [menuOpen, setMenuOpen] = useState(false);
 
     useEffect(() => {
+        // Toggle the menu
         const button = document.getElementById('menu-button');
         if (menuOpen) { button.style.left = '17.8vw' }
         else { button.style.left = '-2px' }
     }, [menuOpen]);
 
+    // Return the sidebar
     return (
         <aside>
+            {/* Open and close the menu */}
             <button
                 id='menu-button'
                 onClick={() => {
@@ -25,6 +34,7 @@ export default function Sidebar(props) {
             >
                 <FiMenu />
             </button>
+            {/* If menu is open displays the menu */}
             {menuOpen &&
                 <div className='Sidebar'>
                     <div className='user-info'>
@@ -42,6 +52,7 @@ export default function Sidebar(props) {
                             <a href='/home'>Home</a>
                         </li>
                         <li>
+                            {/* Sign out */}
                             <button onClick={() => {
                                 signOutUser()
                                     .then(res => window.location.href = '/')
