@@ -4,12 +4,17 @@ import {
     Route,
 } from "react-router-dom";
 
+// Import pages
 import Landing from "./Pages/Landing/Landing";
 import Home from "./Pages/Home/Home";
 import Placeholder from "./Pages/Placeholder";
 import Profile from "./Pages/Profile/Profile";
+import Login from "./Pages/Login/Login";
+
+//Import scss
 import './App.scss'
 
+// Render the app
 export default function App() {
     return (
         <BrowserRouter>
@@ -19,6 +24,7 @@ export default function App() {
                 <Route path="/home" element={<Home />} />
                 <Route path="/placeholder" element={<Placeholder />} />
                 <Route path="/profile" element={<Profile />} />
+                <Route path="/login" element={<Login />} />
             </Routes>
         </BrowserRouter>
     );
