@@ -3,8 +3,11 @@ import {
     IoMdThumbsDown
 } from 'react-icons/io'
 
+// Export the Post component
 export default function Post(props) {
     const { desc, image, likes, dislikes, tags } = props
+
+    // Return the post
     return (
         <article className='Post'>
             <img src={require(`../../Images/${image}`)} alt={desc} />
