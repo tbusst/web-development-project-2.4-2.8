@@ -1,6 +1,5 @@
-import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { getUser } from '../../firebase';
+import { getUser, getPosts } from '../../firebase';
 
 // Components
 import Post from '../../Components/Post/Post';
@@ -14,12 +13,6 @@ export default function Home() {
 
     // Get posts from server and user data from Firebase
     useEffect(() => {
-        axios.get(`${process.env.REACT_APP_SERVER_URL}/api/posts`)
-            .then(res => res.data)
-            .then(posts => {
-                setPosts(posts)
-            })
-
         getUser()
             .then(res => {
                 console.log(res)
@@ -27,18 +20,23 @@ export default function Home() {
                 setProfileImage(res.photoURL)
             })
             .catch(err => console.log(err))
+
+        getPosts()
+            .then(res => setPosts(res))
     }, [])
 
     // Turns post data into Post components
-    const posts = postsData.map(postData => {
-        const { desc, image, likes, dislikes, tags } = postData
+    const posts = Object.keys(postsData).map((key, index) => {
+        const { author, desc, imageUrl, likes, dislikes, tags } = postsData[key];
         return (
             <Post
+                author={author}
                 desc={desc}
-                image={image}
+                image={imageUrl}
                 likes={likes}
                 dislikes={dislikes}
                 tags={tags}
+                key={index}
             />
         )
     })

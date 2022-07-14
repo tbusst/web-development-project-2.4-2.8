@@ -5,12 +5,13 @@ import {
 
 // Export the Post component
 export default function Post(props) {
-    const { desc, image, likes, dislikes, tags } = props
+    const { author, desc, image, likes, dislikes, tags } = props
+    console.log(author)
 
     // Return the post
     return (
         <article className='Post'>
-            <img src={require(`../../Images/${image}`)} alt={desc} />
+            <img src={image} alt={desc} />
             <div className='Post-info'>
                 <p>{desc}</p>
                 <div className='Post-stats'>

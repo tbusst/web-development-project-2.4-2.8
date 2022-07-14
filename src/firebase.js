@@ -17,6 +17,16 @@ import {
     signInWithEmailAndPassword,
     updateProfile
 } from 'firebase/auth';
+import {
+    getDatabase,
+    set,
+    ref as refDatabase,
+    get,
+    increment,
+    push,
+    update,
+    child
+} from "firebase/database";
 
 // Firebase config variables
 const firebaseConfig = {
@@ -24,6 +34,7 @@ const firebaseConfig = {
     authDomain: "web-development-project-2-4.firebaseapp.com",
     projectId: "web-development-project-2-4",
     storageBucket: "web-development-project-2-4.appspot.com",
+    databaseURL: "https://web-development-project-2-4-default-rtdb.firebaseio.com/",
     messagingSenderId: "956772061515",
     appId: "1:956772061515:web:dffec2bc9060f7fc7618ce",
     measurementId: "G-VZSWREVKND"
@@ -32,8 +43,9 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
-const storage = getStorage();
-const auth = getAuth();
+const storage = getStorage(app);
+const database = getDatabase(app);
+const auth = getAuth(app);
 
 // Sign in with email and password
 const signIn = (email, password) => {
@@ -93,7 +105,7 @@ const signOutUser = () => {
 // Get current user
 const getUser = () => {
     return new Promise((resolve, reject) => {
-        getAuth().onAuthStateChanged(user => {
+        getAuth(app).onAuthStateChanged(user => {
             if (user) { resolve(user) }
             else { reject('No user logged in') }
         });
@@ -118,11 +130,94 @@ const uploadImage = (image, userId) => {
     })
 }
 
+// Write to database
+const writeUserData = (data) => {
+    return new Promise((resolve, reject) => {
+        console.log(data)
+        getUser()
+            .then(user => {
+                const userRef = refDatabase(database, `users/${user.uid}`);
+                set(userRef, {
+                    likes: data.likes,
+                    dislikes: data.dislikes
+                })
+                    .then(() => resolve('User data written to database'))
+                    .catch(error => reject(error));
+            })
+    })
+}
+
+const databaseAction = (action) => {
+    return new Promise((resolve, reject) => {
+        getUser()
+            .then(user => {
+                const userRef = refDatabase(database, `users/${user.uid}`);
+                switch (action) {
+                    case 'like':
+                        set(userRef, {
+                            likes: increment(1)
+                        })
+                            .then(() => resolve('Liked'))
+                            .catch(err => reject(err));
+                        break;
+                    case 'dislike':
+                        set(userRef, {
+                            dislikes: increment(1)
+                        })
+                            .then(() => resolve('Disliked'))
+                            .catch(err => reject(err));
+                        break;
+                    default:
+                        break;
+                }
+            })
+    })
+}
+
+const newPost = (desc, imageUrl, tags) => {
+    return new Promise((resolve, reject) => {
+        getUser()
+            .then(user => {
+                const postData = {
+                    //uid: Date.now(),
+                    author: user.displayName,
+                    desc: desc,
+                    imageUrl: imageUrl,
+                    likes: 0,
+                    dislikes: 0,
+                    tags: tags
+                }
+
+                const newPostKey = push(child(refDatabase(database), 'posts')).key;
+                console.log(newPostKey)
+
+                const updates = {};
+                updates['/posts/' + newPostKey] = postData;
+                updates['/user-posts/' + user.uid + '/' + newPostKey] = postData;
+                return update(refDatabase(database), updates);
+            })
+    })
+}
+
+const getPosts = () => {
+    return new Promise((resolve, reject) => {
+        const postsRef = refDatabase(database, 'posts')
+        get(postsRef)
+            .then(snapshot => snapshot.val())
+            .then(posts => resolve(posts))
+            .catch(error => reject(error));
+    })
+}
+
 // Export functions
 export {
     uploadImage,
     signIn,
     signUp,
     signOutUser,
-    getUser
+    getUser,
+    writeUserData,
+    databaseAction,
+    newPost,
+    getPosts
 };
