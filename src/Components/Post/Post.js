@@ -5,8 +5,7 @@ import {
 
 // Export the Post component
 export default function Post(props) {
-    const { author, desc, image, likes, dislikes, tags } = props
-    console.log(author)
+    const { author, authorUrl, desc, image, likes, dislikes, tags } = props
 
     // Return the post
     return (
@@ -34,6 +33,13 @@ export default function Post(props) {
                             >{tag}</span>
                         ))}
                     </div>
+                    <div className="vl" />
+                    <h3>{author}</h3>
+                    <img
+                        className='Post-author-image'
+                        src={authorUrl}
+                        alt={author}
+                    />
                 </div>
             </div>
         </article >

@@ -10,6 +10,7 @@ import Home from "./Pages/Home/Home";
 import Placeholder from "./Pages/Placeholder";
 import Profile from "./Pages/Profile/Profile";
 import Login from "./Pages/Login/Login";
+import CreatePost from "./Pages/CreatePost/CreatePost";
 
 //Import scss
 import './App.scss'
@@ -25,6 +26,7 @@ export default function App() {
                 <Route path="/placeholder" element={<Placeholder />} />
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/login" element={<Login />} />
+                <Route path="/new-post" element={<CreatePost />} />
             </Routes>
         </BrowserRouter>
     );

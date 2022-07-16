@@ -76,6 +76,12 @@ const signUp = (email, password, username, profileImage) => {
                 .then((userCredentials) => {
                     logEvent(analytics, 'sign_up');
                     const user = userCredentials.user;
+                    const userRef = refDatabase(database, `users/${user.uid}`);
+                    set(userRef, {
+                        username: username,
+                        email: email,
+                        profileImage: profileImage
+                    })
                     uploadImage(profileImage, user.uid)
                         .then(res => {
                             updateProfile(user, {
@@ -116,7 +122,9 @@ const getUser = () => {
 const imagesRef = ref(storage, 'images');
 const uploadImage = (image, userId) => {
     return new Promise((resolve, reject) => {
-        const imageRef = ref(imagesRef, userId);
+        let imageRef = ref(imagesRef, `post/${Date.now()}:${image.name}`)
+        if (userId) { imageRef = ref(imagesRef, `user/${userId}`) }
+
         // Upload image
         uploadBytes(imageRef, image)
             .then(() => {
@@ -179,8 +187,8 @@ const newPost = (desc, imageUrl, tags) => {
         getUser()
             .then(user => {
                 const postData = {
-                    //uid: Date.now(),
                     author: user.displayName,
+                    authorUrl: user.photoURL,
                     desc: desc,
                     imageUrl: imageUrl,
                     likes: 0,
@@ -194,8 +202,11 @@ const newPost = (desc, imageUrl, tags) => {
                 const updates = {};
                 updates['/posts/' + newPostKey] = postData;
                 updates['/user-posts/' + user.uid + '/' + newPostKey] = postData;
-                return update(refDatabase(database), updates);
+                update(refDatabase(database), updates)
+                    .then(() => resolve('Post added'))
+                    .catch(error => reject(error));
             })
+            .catch(error => reject(error));
     })
 }
 
@@ -209,6 +220,19 @@ const getPosts = () => {
     })
 }
 
+const getUserPosts = () => {
+    return new Promise((resolve, reject) => {
+        getUser()
+            .then(user => {
+                const postsRef = refDatabase(database, `user-posts/${user.uid}`)
+                get(postsRef)
+                    .then(snapshot => snapshot.val())
+                    .then(posts => resolve(posts))
+                    .catch(error => reject(error));
+            })
+    })
+}
+
 // Export functions
 export {
     uploadImage,
@@ -219,5 +243,6 @@ export {
     writeUserData,
     databaseAction,
     newPost,
-    getPosts
+    getPosts,
+    getUserPosts
 };

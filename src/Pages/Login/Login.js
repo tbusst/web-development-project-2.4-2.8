@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { signIn, signUp } from '../../firebase';
+import { BiUpload } from 'react-icons/bi';
 
 // Export the Login page
 export default function Login() {
@@ -13,6 +14,8 @@ export default function Login() {
     // Gets parameters from url
     const queryString = window.location.search
     const urlParams = new URLSearchParams(queryString);
+
+    const hiddenFileInput = useRef(null);
 
     // Handles sign in
     const handleSubmit = (e) => {
@@ -54,49 +57,90 @@ export default function Login() {
                 <section className='SignUp-form'>
                     <h1>Sign Up</h1>
                     <form onSubmit={handleSubmit}>
-                        <label htmlFor='email'>Email</label>
-                        <input type='text' id='email' onChange={
-                            e => setEmail(e.target.value)
-                        } />
-                        <label htmlFor='username'>Username</label>
-                        <input type='text' id='username' onChange={
-                            e => setUsername(e.target.value)
-                        } />
-                        <label htmlFor='password'>Password</label>
-                        <input type='password' id='password' onChange={
-                            e => setPassword(e.target.value)
-                        } />
-                        <label htmlFor='profile'>Profile</label>
-                        <input type='file' id='profile' onChange={
-                            async e => {
-                                // Get file
-                                let image = e.currentTarget.files[0];
-                                setProfileImage(image);
-                            }} />
+                        <input
+                            type='text'
+                            id='email'
+                            placeholder='Email'
+                            onChange={
+                                e => setEmail(e.target.value)
+                            }
+                        />
+                        <input
+                            type='text'
+                            id='username'
+                            placeholder='Username'
+                            onChange={
+                                e => setUsername(e.target.value)
+                            }
+                        />
+                        <input
+                            type='password'
+                            id='password'
+                            placeholder='Password'
+                            onChange={
+                                e => setPassword(e.target.value)
+                            }
+                        />
+                        <div className='profile-image-container'>
+                            <p>
+                                {hiddenFileInput.current?.files[0]?.name || 'Profile Picture'}
+                            </p>
+                            <button
+                                onClick={
+                                    () => hiddenFileInput.current.click()
+                                }
+                            >
+                                <BiUpload />
+                            </button>
+                            <input
+                                type='file'
+                                id='profile'
+                                ref={hiddenFileInput}
+                                onChange={
+                                    async e => {
+                                        // Get file
+                                        let image = e.currentTarget.files[0];
+                                        setProfileImage(image);
+                                    }
+                                }
+                            />
+                        </div>
                         <button type='submit'>Sign Up</button>
+                        {/* Displays error message */}
+                        {error && <p className='error'>{error}</p>}
+                        <div className='signup-link'>
+                            <p>Already have an account?</p>
+                            <a href='/login?mode=signin'>Sign in</a>
+                        </div>
                     </form>
-                    {/* Displays error message */}
-                    {error && <p className='error'>{error}</p>}
-                    <p>Already have an account?</p>
-                    <a href='/login?mode=signin'>Sign in</a>
                 </section>}
             {urlParams.get('mode') === 'signin' &&
                 <section className='SignIn-form'>
                     <h1>Sign In</h1>
                     <form onSubmit={handleSubmit}>
-                        <label htmlFor='email'>Email</label>
-                        <input type='text' id='email' onChange={
-                            e => setEmail(e.target.value)
-                        } />
-                        <label htmlFor='password'>Password</label>
-                        <input type='password' id='password' onChange={
-                            e => setPassword(e.target.value)
-                        } />
-                        <button type='submit'>Sign In</button>
+                        <input
+                            type='text'
+                            id='email'
+                            placeholder='Email'
+                            onChange={
+                                e => setEmail(e.target.value)
+                            }
+                        />
+                        <input
+                            type='password'
+                            id='password'
+                            placeholder='Password'
+                            onChange={
+                                e => setPassword(e.target.value)
+                            }
+                        />
+                        <button type='submit'>Login</button>
                         {/* Displays error message */}
                         {error && <p className='error'>{error}</p>}
-                        <p>Dont have an account?</p>
-                        <a href='/login?mode=signup'>Sign up</a>
+                        <div className='signup-link'>
+                            <p>Dont have an account?</p>
+                            <a href='/login?mode=signup'>Sign up</a>
+                        </div>
                     </form>
                 </section>}
         </main>

@@ -7,7 +7,7 @@ import { BsFillPersonFill } from 'react-icons/bs';
 import { useEffect, useState } from 'react';
 
 // Import firebase functions
-import { signOutUser, newPost } from '../../firebase';
+import { signOutUser } from '../../firebase';
 
 // Export the Sidebar component
 export default function Sidebar(props) {
@@ -37,7 +37,7 @@ export default function Sidebar(props) {
             {/* If menu is open displays the menu */}
             {menuOpen &&
                 <div className='Sidebar'>
-                    <button onClick={
+                    {/* <button onClick={
                         () => {
                             console.log('clicked')
                             newPost(
@@ -50,7 +50,7 @@ export default function Sidebar(props) {
                                 ]
                             )
                         }
-                    }>LIKE</button>
+                    }>Generate Post</button> */}
                     <div className='user-info'>
                         <img src={profile} alt='profile' />
                         <p>{username}</p>

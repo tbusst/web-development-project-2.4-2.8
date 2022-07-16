@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { getUser, getPosts } from '../../firebase';
+import { IoMdCreate } from 'react-icons/io';
 
 // Components
 import Post from '../../Components/Post/Post';
@@ -15,7 +16,6 @@ export default function Home() {
     useEffect(() => {
         getUser()
             .then(res => {
-                console.log(res)
                 setUsername(res.displayName)
                 setProfileImage(res.photoURL)
             })
@@ -26,20 +26,24 @@ export default function Home() {
     }, [])
 
     // Turns post data into Post components
-    const posts = Object.keys(postsData).map((key, index) => {
-        const { author, desc, imageUrl, likes, dislikes, tags } = postsData[key];
-        return (
-            <Post
-                author={author}
-                desc={desc}
-                image={imageUrl}
-                likes={likes}
-                dislikes={dislikes}
-                tags={tags}
-                key={index}
-            />
-        )
-    })
+    let posts = []
+    if (postsData) {
+        posts = Object.keys(postsData).map((key, index) => {
+            const { author, authorUrl, desc, imageUrl, likes, dislikes, tags } = postsData[key];
+            return (
+                <Post
+                    author={author}
+                    authorUrl={authorUrl}
+                    desc={desc}
+                    image={imageUrl}
+                    likes={likes}
+                    dislikes={dislikes}
+                    tags={tags}
+                    key={index}
+                />
+            )
+        });
+    }
 
     // Render the Home page
     return (
@@ -48,6 +52,11 @@ export default function Home() {
                 username={username}
                 profile={profileImage}
             />
+            <button
+                className='new-post-button'
+                onClick={() => {
+                    window.location.href = '/new-post'
+                }}><IoMdCreate /></button>
             <section className='Posts'>
                 {posts.length !== 0 && posts}
                 {!posts.length &&
