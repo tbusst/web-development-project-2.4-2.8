@@ -1,6 +1,6 @@
 // Profile banner component
 export default function ProfileBanner(props) {
-    const { username, profile, likes, dislikes } = props;
+    const { username, profile, likes } = props;
     return (
         <header className='ProfileBanner'>
             <div className='user-info'>
@@ -9,8 +9,6 @@ export default function ProfileBanner(props) {
             </div>
             <div className='user-stats'>
                 <h3>Likes {likes}</h3>
-                <div className='vr' />
-                <h3>Dislikes {dislikes}</h3>
             </div>
         </header>
     );

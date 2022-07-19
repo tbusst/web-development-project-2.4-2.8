@@ -1,11 +1,43 @@
+import { IoMdThumbsUp } from 'react-icons/io'
 import {
-    IoMdThumbsUp,
-    IoMdThumbsDown
-} from 'react-icons/io'
+    handleLike
+} from '../../firebase'
+import {
+    useState,
+    useEffect
+} from 'react'
 
 // Export the Post component
 export default function Post(props) {
-    const { author, authorUrl, desc, image, likes, dislikes, tags } = props
+    const {
+        author,
+        authorUrl,
+        desc,
+        image,
+        tags,
+        likes,
+        id,
+        userLikes
+    } = props
+    const [liked, setLiked] = useState(false)
+    const [likesCount, setLikesCount] = useState(likes)
+    const [tagsArr, setTags] = useState()
+
+    const handleLikeClick = (id) => {
+        handleLike(id, !liked)
+        setLiked(!liked)
+        setLikesCount(liked ? likesCount - 1 : likesCount + 1)
+    }
+
+    useEffect(() => {
+        if (userLikes) {
+            Object.keys(userLikes).forEach((key) => {
+                if (userLikes[key] === id) setLiked(true)
+            })
+        }
+
+        console.log(tags)
+    }, [userLikes, id])
 
     // Return the post
     return (
@@ -14,15 +46,16 @@ export default function Post(props) {
             <div className='Post-info'>
                 <p>{desc}</p>
                 <div className='Post-stats'>
-                    <h3>
-                        <button>
+                    <h3
+                        className='likeCount'
+                        style={liked ? { color: '#e3b706' } : {}}
+                    >
+                        <button
+                            onClick={() => handleLikeClick(id)}
+                            style={liked ? { color: '#e3b706' } : {}}
+                        >
                             <IoMdThumbsUp />
-                        </button> {likes}
-                    </h3>
-                    <h3>
-                        <button>
-                            <IoMdThumbsDown />
-                        </button> {dislikes}
+                        </button> {likesCount}
                     </h3>
                     <div className="vl" />
                     <div className='Post-tags'>

@@ -25,7 +25,8 @@ import {
     increment,
     push,
     update,
-    child
+    child,
+    remove
 } from "firebase/database";
 
 // Firebase config variables
@@ -80,7 +81,8 @@ const signUp = (email, password, username, profileImage) => {
                     set(userRef, {
                         username: username,
                         email: email,
-                        profileImage: profileImage
+                        profileImage: profileImage,
+                        likedPosts: []
                     })
                     uploadImage(profileImage, user.uid)
                         .then(res => {
@@ -112,8 +114,8 @@ const signOutUser = () => {
 const getUser = () => {
     return new Promise((resolve, reject) => {
         getAuth(app).onAuthStateChanged(user => {
-            if (user) { resolve(user) }
-            else { reject('No user logged in') }
+            if (user) resolve(user)
+            else reject('No user logged in')
         });
     })
 }
@@ -123,7 +125,7 @@ const imagesRef = ref(storage, 'images');
 const uploadImage = (image, userId) => {
     return new Promise((resolve, reject) => {
         let imageRef = ref(imagesRef, `post/${Date.now()}:${image.name}`)
-        if (userId) { imageRef = ref(imagesRef, `user/${userId}`) }
+        if (userId) imageRef = ref(imagesRef, `user/${userId}`)
 
         // Upload image
         uploadBytes(imageRef, image)
@@ -138,65 +140,21 @@ const uploadImage = (image, userId) => {
     })
 }
 
-// Write to database
-const writeUserData = (data) => {
-    return new Promise((resolve, reject) => {
-        console.log(data)
-        getUser()
-            .then(user => {
-                const userRef = refDatabase(database, `users/${user.uid}`);
-                set(userRef, {
-                    likes: data.likes,
-                    dislikes: data.dislikes
-                })
-                    .then(() => resolve('User data written to database'))
-                    .catch(error => reject(error));
-            })
-    })
-}
-
-const databaseAction = (action) => {
-    return new Promise((resolve, reject) => {
-        getUser()
-            .then(user => {
-                const userRef = refDatabase(database, `users/${user.uid}`);
-                switch (action) {
-                    case 'like':
-                        set(userRef, {
-                            likes: increment(1)
-                        })
-                            .then(() => resolve('Liked'))
-                            .catch(err => reject(err));
-                        break;
-                    case 'dislike':
-                        set(userRef, {
-                            dislikes: increment(1)
-                        })
-                            .then(() => resolve('Disliked'))
-                            .catch(err => reject(err));
-                        break;
-                    default:
-                        break;
-                }
-            })
-    })
-}
-
 const newPost = (desc, imageUrl, tags) => {
     return new Promise((resolve, reject) => {
         getUser()
             .then(user => {
+                const newPostKey = push(child(refDatabase(database), 'posts')).key;
                 const postData = {
                     author: user.displayName,
                     authorUrl: user.photoURL,
                     desc: desc,
                     imageUrl: imageUrl,
                     likes: 0,
-                    dislikes: 0,
-                    tags: tags
+                    tags: tags,
+                    id: newPostKey
                 }
 
-                const newPostKey = push(child(refDatabase(database), 'posts')).key;
                 console.log(newPostKey)
 
                 const updates = {};
@@ -233,6 +191,49 @@ const getUserPosts = () => {
     })
 }
 
+const handleLike = (postId, action) => {
+    return new Promise((resolve, reject) => {
+        const amount = action ? 1 : -1;
+        getUser()
+            .then(user => {
+                const postRef = refDatabase(database, `posts/${postId}`);
+                const userPostRef = refDatabase(database, `user-posts/${user.uid}/${postId}`);
+                update(postRef, {
+                    likes: increment(amount)
+                })
+                update(userPostRef, {
+                    likes: increment(amount)
+                })
+                console.log(postId)
+                const postLikesRef = refDatabase(database, `users/${user.uid}/likedPosts/${postId}`);
+                if (action) {
+                    const updates = {};
+                    updates['/users/' + user.uid + '/likedPosts/' + postId] = postId;
+                    update(refDatabase(database), updates)
+                        .then(() => resolve('Post liked'))
+                        .catch(error => reject(error));
+                }
+                else remove(postLikesRef)
+            })
+            .catch(error => reject(error));
+
+    })
+}
+
+// Get user likes
+const getUserLikes = () => {
+    return new Promise((resolve, reject) => {
+        getUser()
+            .then(user => {
+                const userLikedRef = refDatabase(database, `users/${user.uid}/likedPosts`);
+                get(userLikedRef)
+                    .then(snapshot => snapshot.val())
+                    .then(likedPosts => resolve(likedPosts))
+                    .catch(error => reject(error));
+            })
+    })
+}
+
 // Export functions
 export {
     uploadImage,
@@ -240,9 +241,9 @@ export {
     signUp,
     signOutUser,
     getUser,
-    writeUserData,
-    databaseAction,
     newPost,
     getPosts,
-    getUserPosts
+    getUserPosts,
+    getUserLikes,
+    handleLike
 };

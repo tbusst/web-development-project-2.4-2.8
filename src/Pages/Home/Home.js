@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getUser, getPosts } from '../../firebase';
+import { getUser, getPosts, getUserLikes } from '../../firebase';
 import { IoMdCreate } from 'react-icons/io';
 
 // Components
@@ -11,6 +11,7 @@ export default function Home() {
     const [postsData, setPosts] = useState([]);
     const [username, setUsername] = useState([]);
     const [profileImage, setProfileImage] = useState([]);
+    const [userLikes, setUserLikes] = useState([]);
 
     // Get posts from server and user data from Firebase
     useEffect(() => {
@@ -23,13 +24,19 @@ export default function Home() {
 
         getPosts()
             .then(res => setPosts(res))
+
+        getUserLikes()
+            .then(res => {
+                setUserLikes(res)
+            })
+            .catch(err => console.log(err))
     }, [])
 
     // Turns post data into Post components
     let posts = []
     if (postsData) {
         posts = Object.keys(postsData).map((key, index) => {
-            const { author, authorUrl, desc, imageUrl, likes, dislikes, tags } = postsData[key];
+            const { author, authorUrl, desc, imageUrl, likes, tags, id } = postsData[key];
             return (
                 <Post
                     author={author}
@@ -37,8 +44,9 @@ export default function Home() {
                     desc={desc}
                     image={imageUrl}
                     likes={likes}
-                    dislikes={dislikes}
                     tags={tags}
+                    id={id}
+                    userLikes={userLikes}
                     key={index}
                 />
             )

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getUser, getUserPosts } from '../../firebase';
+import { getUser, getUserPosts, getUserLikes } from '../../firebase';
 
 // Import the components
 import Sidebar from '../../Components/Sidebar/Sidebar';
@@ -11,7 +11,8 @@ export default function Profile() {
     const [username, setUsername] = useState('');
     const [profileImage, setProfileImage] = useState([]);
     const [postsData, setPosts] = useState([]);
-    const [likes, setLikes] = useState([0, 0]);
+    const [likes, setLikes] = useState(0);
+    const [userLikes, setUserLikes] = useState([]);
 
     useEffect(() => {
         // Get the user's data from the database
@@ -25,31 +26,38 @@ export default function Profile() {
         getUserPosts()
             .then(res => {
                 setPosts(res)
-                Object.keys(res).map((key, index) => {
-                    const { likes, dislikes } = res[key];
-                    setLikes(prevLikes => [prevLikes[0] + likes, prevLikes[1] + dislikes])
+                Object.keys(res).map((key) => {
+                    const { likes } = res[key];
+                    setLikes(prevLikes => prevLikes + likes)
                 })
             })
 
-
+        getUserLikes()
+            .then(res => {
+                setUserLikes(res)
+            })
+            .catch(err => console.log(err))
     }, []);
 
     let posts = []
     if (postsData) {
         posts = Object.keys(postsData).map((key, index) => {
-            const { author, authorUrl, desc, imageUrl, likes, dislikes, tags } = postsData[key];
-            return (
-                <Post
-                    author={author}
-                    authorUrl={authorUrl}
-                    desc={desc}
-                    image={imageUrl}
-                    likes={likes}
-                    dislikes={dislikes}
-                    tags={tags}
-                    key={index}
-                />
-            )
+            const { author, authorUrl, desc, imageUrl, likes, tags, id } = postsData[key];
+            if (postsData[key]) {
+                return (
+                    <Post
+                        author={author}
+                        authorUrl={authorUrl}
+                        desc={desc}
+                        image={imageUrl}
+                        likes={likes}
+                        tags={tags}
+                        id={id}
+                        userLikes={userLikes}
+                        key={index}
+                    />
+                )
+            }
         });
     }
 
@@ -64,8 +72,7 @@ export default function Profile() {
                 <ProfileBanner
                     username={username}
                     profile={profileImage}
-                    likes={likes[0]}
-                    dislikes={likes[1]}
+                    likes={likes}
                 />
                 {posts}
             </section>

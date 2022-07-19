@@ -37,14 +37,19 @@
                 }
 
                 h3 {
+                    color: $yellow;
                     display: flex;
                     align-items: center;
 
                     button {
-                        color: $yellow;
+                        color: $light-navy;
                         font-size: 25px;
                         background-color: transparent;
                     }
+                }
+
+                .likeCount {
+                    color: $light-navy;
                 }
 
                 img {
