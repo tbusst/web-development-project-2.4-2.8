@@ -86,9 +86,8 @@ export default function Login() {
                                 {hiddenFileInput.current?.files[0]?.name || 'Profile Picture'}
                             </p>
                             <button
-                                onClick={
-                                    () => hiddenFileInput.current.click()
-                                }
+                                type='button'
+                                onClick={() => hiddenFileInput.current.click()}
                             >
                                 <BiUpload />
                             </button>
@@ -96,13 +95,11 @@ export default function Login() {
                                 type='file'
                                 id='profile'
                                 ref={hiddenFileInput}
-                                onChange={
-                                    async e => {
-                                        // Get file
-                                        let image = e.currentTarget.files[0];
-                                        setProfileImage(image);
-                                    }
-                                }
+                                onChange={async e => {
+                                    // Get file
+                                    let image = e.currentTarget.files[0];
+                                    setProfileImage(image);
+                                }}
                             />
                         </div>
                         <button type='submit'>Sign Up</button>

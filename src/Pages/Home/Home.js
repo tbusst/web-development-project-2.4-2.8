@@ -1,5 +1,15 @@
-import { useEffect, useState } from 'react';
-import { getUser, getPosts, getUserLikes } from '../../firebase';
+// Import modules
+import {
+    useEffect,
+    useState
+} from 'react';
+import {
+    getUser,
+    getPosts,
+    getUserLikes
+} from '../../firebase';
+
+// Import icons
 import { IoMdCreate } from 'react-icons/io';
 
 // Components
@@ -8,6 +18,7 @@ import Sidebar from '../../Components/Sidebar/Sidebar';
 
 // Export the Home page
 export default function Home() {
+    // States
     const [postsData, setPosts] = useState([]);
     const [username, setUsername] = useState([]);
     const [profileImage, setProfileImage] = useState([]);
@@ -15,6 +26,7 @@ export default function Home() {
 
     // Get posts from server and user data from Firebase
     useEffect(() => {
+        // Get the user's data from the database
         getUser()
             .then(res => {
                 setUsername(res.displayName)
@@ -22,9 +34,11 @@ export default function Home() {
             })
             .catch(err => console.log(err))
 
+        // Get the posts from the database
         getPosts()
             .then(res => setPosts(res))
 
+        // Get the user's liked posts from the database
         getUserLikes()
             .then(res => {
                 setUserLikes(res)
@@ -60,12 +74,14 @@ export default function Home() {
                 username={username}
                 profile={profileImage}
             />
+            {/* new post button */}
             <button
                 className='new-post-button'
                 onClick={() => {
                     window.location.href = '/new-post'
                 }}><IoMdCreate /></button>
             <section className='Posts'>
+                {/* if not posts are found, display a loading gif */}
                 {posts.length !== 0 && posts}
                 {!posts.length &&
                     <img

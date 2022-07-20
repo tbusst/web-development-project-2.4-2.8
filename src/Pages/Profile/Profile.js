@@ -1,3 +1,4 @@
+// Import modules
 import { useEffect, useState } from "react";
 import { getUser, getUserPosts, getUserLikes } from '../../firebase';
 
@@ -23,15 +24,17 @@ export default function Profile() {
             })
             .catch(err => console.log(err))
 
+        // Get the user's posts from the database
         getUserPosts()
             .then(res => {
                 setPosts(res)
-                Object.keys(res).map((key) => {
+                Object.keys(res).forEach((key) => {
                     const { likes } = res[key];
                     setLikes(prevLikes => prevLikes + likes)
                 })
             })
 
+        // Get the user's liked posts from the database
         getUserLikes()
             .then(res => {
                 setUserLikes(res)
@@ -39,6 +42,7 @@ export default function Profile() {
             .catch(err => console.log(err))
     }, []);
 
+    // Turns post data into a list of post components
     let posts = []
     if (postsData) {
         posts = Object.keys(postsData).map((key, index) => {
@@ -57,7 +61,7 @@ export default function Profile() {
                         key={index}
                     />
                 )
-            }
+            } else return null;
         });
     }
 

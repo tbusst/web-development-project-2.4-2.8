@@ -1,11 +1,13 @@
-import { IoMdThumbsUp } from 'react-icons/io'
-import {
-    handleLike
-} from '../../firebase'
+// Module imports
 import {
     useState,
     useEffect
 } from 'react'
+import { handleLike } from '../../firebase'
+
+// Icon imports
+import { IoMdThumbsUp } from 'react-icons/io'
+
 
 // Export the Post component
 export default function Post(props) {
@@ -19,24 +21,27 @@ export default function Post(props) {
         id,
         userLikes
     } = props
+
+    // States
     const [liked, setLiked] = useState(false)
     const [likesCount, setLikesCount] = useState(likes)
-    const [tagsArr, setTags] = useState()
 
+    // Likes the post 
+    // then inverts the liked state and updates the likes count
     const handleLikeClick = (id) => {
         handleLike(id, !liked)
         setLiked(!liked)
         setLikesCount(liked ? likesCount - 1 : likesCount + 1)
     }
 
+    // Checks if the user has liked the post
+    // If so, sets the liked state to true
     useEffect(() => {
         if (userLikes) {
             Object.keys(userLikes).forEach((key) => {
                 if (userLikes[key] === id) setLiked(true)
             })
         }
-
-        console.log(tags)
     }, [userLikes, id])
 
     // Return the post
@@ -48,6 +53,8 @@ export default function Post(props) {
                 <div className='Post-stats'>
                     <h3
                         className='likeCount'
+                        // If the user has liked the post,
+                        // color the icon and text
                         style={liked ? { color: '#e3b706' } : {}}
                     >
                         <button

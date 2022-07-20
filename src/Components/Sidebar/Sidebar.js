@@ -37,20 +37,6 @@ export default function Sidebar(props) {
             {/* If menu is open displays the menu */}
             {menuOpen &&
                 <div className='Sidebar'>
-                    {/* <button onClick={
-                        () => {
-                            console.log('clicked')
-                            newPost(
-                                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi cursus quis ante in rhoncus. Pellentesque porttitor posuere augue, mollis tincidunt augue hendrerit a.",
-                                'https://firebasestorage.googleapis.com/v0/b/web-development-project-2-4.appspot.com/o/images%2FPIsLJJv4LjNxfToqOxal8EMzTCB2?alt=media&token=2f4ab123-e2a0-4b32-9761-8d9bedcee916',
-                                [
-                                    "tag1",
-                                    "tag2",
-                                    "tag3"
-                                ]
-                            )
-                        }
-                    }>Generate Post</button> */}
                     <div className='user-info'>
                         <img src={profile} alt='profile' />
                         <p>{username}</p>

@@ -1,4 +1,4 @@
-// Import firebase functions
+// Import firebase modules
 import { initializeApp } from "firebase/app";
 import {
     getAnalytics,
@@ -140,6 +140,7 @@ const uploadImage = (image, userId) => {
     })
 }
 
+// Create a new post
 const newPost = (desc, imageUrl, tags) => {
     return new Promise((resolve, reject) => {
         getUser()
@@ -168,6 +169,7 @@ const newPost = (desc, imageUrl, tags) => {
     })
 }
 
+// Get all posts
 const getPosts = () => {
     return new Promise((resolve, reject) => {
         const postsRef = refDatabase(database, 'posts')
@@ -178,6 +180,7 @@ const getPosts = () => {
     })
 }
 
+// gets current user's posts
 const getUserPosts = () => {
     return new Promise((resolve, reject) => {
         getUser()
@@ -191,6 +194,7 @@ const getUserPosts = () => {
     })
 }
 
+// likes or unlikes a post based on the action bool
 const handleLike = (postId, action) => {
     return new Promise((resolve, reject) => {
         const amount = action ? 1 : -1;
