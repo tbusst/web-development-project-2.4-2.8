@@ -1,5 +1,14 @@
-import { useState, useRef } from 'react';
-import { signIn, signUp } from '../../firebase';
+// Import modules
+import {
+    useState,
+    useRef
+} from 'react';
+import {
+    signIn,
+    signUp
+} from '../../firebase';
+
+// Import icons
 import { BiUpload } from 'react-icons/bi';
 
 // Export the Login page
