@@ -1,0 +1,25 @@
+body {
+    background-color: $mid-navy;
+}
+
+.loading-image {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.new-post-button {
+    color: $yellow;
+    position: absolute;
+    text-align: center;
+    background-color: $dark-navy;
+    border-radius: 5px;
+    font-size: 40px;
+    height: 45px;
+    width: 50px;
+    padding: 0;
+    top: 0;
+    right: -5px;
+    background-color: $dark-navy;
+}
