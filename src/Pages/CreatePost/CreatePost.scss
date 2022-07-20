@@ -1,0 +1,88 @@
+.form-div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: calc(50% - 40px);
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: $yellow;
+    margin-bottom: 0.75rem;
+}
+
+textarea {
+    width: calc(100% - 20px);
+    height: 120px;
+    font-size: 1.5rem;
+    font-weight: 300;
+    line-height: 1.5;
+    color: $yellow;
+
+    padding: 10px;
+    border-radius: 10px;
+    background-color: $dark-navy;
+    margin-top: 0px;
+}
+
+textarea::placeholder {
+    /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #bba961;
+    opacity: 1;
+    /* Firefox */
+}
+
+.css-b62m3t-container {
+    width: 100%;
+    border-radius: 10px;
+    height: 100%;
+}
+
+.tag-file-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    width: calc(60vw + 20px);
+
+    gap: 20px;
+
+    input[type="file"] {
+        display: none;
+    }
+
+    button {
+        width: 100%;
+        height: 74px;
+
+        p {
+            color: white;
+            font-size: 1rem;
+        }
+    }
+}
+
+button[type="submit"] {
+    height: 74px;
+}
+
+.back-button {
+    color: $yellow;
+    position: absolute;
+    text-align: center;
+    background-color: $dark-navy;
+    border-radius: 5px;
+    font-size: 40px;
+    height: 45px;
+    width: 50px;
+    padding: 0;
+    top: 0;
+    right: -5px;
+    background-color: $dark-navy;
+}

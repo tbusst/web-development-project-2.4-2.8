@@ -11,7 +11,7 @@ body {
 
 .new-post-button {
     color: $yellow;
-    position: absolute;
+    position: fixed;
     text-align: center;
     background-color: $dark-navy;
     border-radius: 5px;

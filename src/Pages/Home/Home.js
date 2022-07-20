@@ -79,7 +79,8 @@ export default function Home() {
                 className='new-post-button'
                 onClick={() => {
                     window.location.href = '/new-post'
-                }}><IoMdCreate /></button>
+                }}><IoMdCreate />
+            </button>
             <section className='Posts'>
                 {/* if not posts are found, display a loading gif */}
                 {posts.length !== 0 && posts}
