@@ -9,12 +9,10 @@ import {
     getUserLikes
 } from '../../firebase';
 
-// Import icons
-import { IoMdCreate } from 'react-icons/io';
-
 // Components
 import Post from '../../Components/Post/Post';
 import Sidebar from '../../Components/Sidebar/Sidebar';
+import NewPostButton from '../../Components/NewPostButton/NewPostButton';
 
 // Export the Home page
 export default function Home() {
@@ -74,13 +72,7 @@ export default function Home() {
                 username={username}
                 profile={profileImage}
             />
-            {/* new post button */}
-            <button
-                className='new-post-button'
-                onClick={() => {
-                    window.location.href = '/new-post'
-                }}><IoMdCreate />
-            </button>
+            <NewPostButton />
             <section className='Posts'>
                 {/* if not posts are found, display a loading gif */}
                 {posts.length !== 0 && posts}
