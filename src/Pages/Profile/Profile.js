@@ -46,22 +46,26 @@ export default function Profile() {
     let posts = []
     if (postsData) {
         posts = Object.keys(postsData).map((key, index) => {
-            const { author, authorUrl, desc, imageUrl, likes, tags, id } = postsData[key];
-            if (postsData[key]) {
-                return (
-                    <Post
-                        author={author}
-                        authorUrl={authorUrl}
-                        desc={desc}
-                        image={imageUrl}
-                        likes={likes}
-                        tags={tags}
-                        id={id}
-                        userLikes={userLikes}
-                        key={index}
-                    />
-                )
-            } else return null;
+            try {
+                const { author, authorUrl, desc, imageUrl, likes, tags, id } = postsData[key];
+                if (postsData[key]) {
+                    return (
+                        <Post
+                            author={author}
+                            authorUrl={authorUrl}
+                            desc={desc}
+                            image={imageUrl}
+                            likes={likes}
+                            tags={tags}
+                            id={id}
+                            userLikes={userLikes}
+                            key={index}
+                        />
+                    )
+                } else return null;
+            } catch (err) {
+                return null;
+            }
         });
     }
 
