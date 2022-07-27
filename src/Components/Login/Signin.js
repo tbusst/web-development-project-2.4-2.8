@@ -5,7 +5,7 @@ import {
     signIn
 } from '../../firebase';
 
-export default function Signin() {
+export default function Signin(props) {
     // Declare state variables
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -55,7 +55,10 @@ export default function Signin() {
                 {error && <p className='error'>{error}</p>}
                 <div className='signup-link'>
                     <p>Dont have an account?</p>
-                    <a href='/login?mode=signup'>Sign up</a>
+                    <a href='_' onClick={e => {
+                        e.preventDefault();
+                        props.setMode('signup');
+                    }}>Sign up</a>
                 </div>
             </form>
         </section>

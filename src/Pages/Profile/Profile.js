@@ -51,6 +51,7 @@ export default function Profile() {
                 if (postsData[key]) {
                     return (
                         <Post
+                            profilePage={true}
                             author={author}
                             authorUrl={authorUrl}
                             desc={desc}

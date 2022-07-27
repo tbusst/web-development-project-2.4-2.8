@@ -19,7 +19,8 @@ export default function Post(props) {
         tags,
         likes,
         id,
-        userLikes
+        userLikes,
+        profilePage
     } = props
 
     // States
@@ -66,12 +67,12 @@ export default function Post(props) {
                     </h3>
                     <div className="vl" />
                     <div className='Post-tags'>
-                        {tags.map((tag, index) => (
+                        {tags ? tags.map((tag, index) => (
                             <span
                                 key={index}
                                 className='Tag'
                             >{tag}</span>
-                        ))}
+                        )) : null}
                     </div>
                     <div className="vl" />
                     <h3>{author}</h3>
