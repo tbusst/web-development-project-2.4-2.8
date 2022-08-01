@@ -10,7 +10,7 @@ import {
 // Import icons
 import { BiUpload } from 'react-icons/bi';
 
-export default function Signup() {
+export default function Signup(props) {
     // Declare state variables
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -26,7 +26,7 @@ export default function Signup() {
         // Reset error message
         setError('')
 
-        // Pevent blank fields
+        // Prevent blank fields
         if (!email || !password) {
             setError('Please enter an email and password.');
         } else {
@@ -96,7 +96,10 @@ export default function Signup() {
                 {error && <p className='error'>{error}</p>}
                 <div className='signup-link'>
                     <p>Already have an account?</p>
-                    <a href='/login?mode=signin'>Sign in</a>
+                    <a href='_' onClick={e => {
+                        e.preventDefault();
+                        props.setMode('signin');
+                    }}>Sign in</a>
                 </div>
             </form>
         </section>

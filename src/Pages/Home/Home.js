@@ -64,6 +64,8 @@ export default function Home() {
             )
         });
     }
+    // reverse the posts so the newest posts are on top
+    const reversedPosts = posts.reverse();
 
     // Render the Home page
     return (
@@ -75,7 +77,7 @@ export default function Home() {
             <NewPostButton />
             <section className='Posts'>
                 {/* if not posts are found, display a loading gif */}
-                {posts.length !== 0 && posts}
+                {posts.length !== 0 && reversedPosts}
                 {!posts.length &&
                     <img
                         className='loading-image'

@@ -79,7 +79,7 @@ export default function CreatePost() {
                         >
                             <BiUpload />
                             <p>
-                                {hiddenFileInput.current?.files[0]?.name || 'Profile Picture'}
+                                {hiddenFileInput.current?.files[0]?.name || 'Upload Image'}
                             </p>
                         </button>
                         <input
