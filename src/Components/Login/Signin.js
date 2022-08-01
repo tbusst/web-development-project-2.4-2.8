@@ -17,7 +17,7 @@ export default function Signin() {
         // Reset error message
         setError('')
 
-        // Pevent blank fields
+        // Prevent blank fields
         if (!email || !password) {
             setError('Please enter an email and password.');
         } else {
