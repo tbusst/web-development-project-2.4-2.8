@@ -48,10 +48,11 @@ export default function Home() {
     let posts = []
     if (postsData) {
         posts = Object.keys(postsData).map((key, index) => {
-            const { author, authorUrl, desc, imageUrl, likes, tags, id } = postsData[key];
+            const { author, authorId, authorUrl, desc, imageUrl, likes, tags, id } = postsData[key];
             return (
                 <Post
                     author={author}
+                    authorId={authorId}
                     authorUrl={authorUrl}
                     desc={desc}
                     image={imageUrl}

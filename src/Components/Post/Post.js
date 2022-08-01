@@ -13,6 +13,7 @@ import { IoMdThumbsUp } from 'react-icons/io'
 export default function Post(props) {
     const {
         author,
+        authorId,
         authorUrl,
         desc,
         image,
@@ -30,7 +31,7 @@ export default function Post(props) {
     // Likes the post 
     // then inverts the liked state and updates the likes count
     const handleLikeClick = (id) => {
-        handleLike(id, !liked)
+        handleLike(id, authorId, !liked)
         setLiked(!liked)
         setLikesCount(liked ? likesCount - 1 : likesCount + 1)
     }

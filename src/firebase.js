@@ -148,6 +148,7 @@ const newPost = (desc, imageUrl, tags) => {
                 const newPostKey = push(child(refDatabase(database), 'posts')).key;
                 const postData = {
                     author: user.displayName,
+                    authorId: user.uid,
                     authorUrl: user.photoURL,
                     desc: desc,
                     imageUrl: imageUrl,
@@ -195,20 +196,20 @@ const getUserPosts = () => {
 }
 
 // likes or unlikes a post based on the action bool
-const handleLike = (postId, action) => {
+const handleLike = (postId, authorId, action) => {
     return new Promise((resolve, reject) => {
+        console.log(postId, authorId, action)
         const amount = action ? 1 : -1;
         getUser()
             .then(user => {
                 const postRef = refDatabase(database, `posts/${postId}`);
-                const userPostRef = refDatabase(database, `user-posts/${user.uid}/${postId}`);
+                const userPostRef = refDatabase(database, `user-posts/${authorId}/${postId}`);
                 update(postRef, {
                     likes: increment(amount)
                 })
                 update(userPostRef, {
                     likes: increment(amount)
                 })
-                console.log(postId)
                 const postLikesRef = refDatabase(database, `users/${user.uid}/likedPosts/${postId}`);
                 if (action) {
                     const updates = {};

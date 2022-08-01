@@ -47,12 +47,13 @@ export default function Profile() {
     if (postsData) {
         posts = Object.keys(postsData).map((key, index) => {
             try {
-                const { author, authorUrl, desc, imageUrl, likes, tags, id } = postsData[key];
+                const { author, authorId, authorUrl, desc, imageUrl, likes, tags, id } = postsData[key];
                 if (postsData[key]) {
                     return (
                         <Post
                             profilePage={true}
                             author={author}
+                            authorId={authorId}
                             authorUrl={authorUrl}
                             desc={desc}
                             image={imageUrl}
