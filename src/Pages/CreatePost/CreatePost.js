@@ -27,8 +27,8 @@ export default function CreatePost() {
         e.preventDefault();
         const tagsList = tags.map(tag => tag.value);
         uploadImage(image)
-            .then(url => {
-                newPost(description, url, tagsList)
+            .then(res => {
+                newPost(description, res, tagsList)
                     .then(res => window.location.href = '/home')
             })
             .catch(err => console.log(err));

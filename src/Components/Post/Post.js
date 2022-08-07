@@ -3,10 +3,14 @@ import {
     useState,
     useEffect
 } from 'react'
-import { handleLike } from '../../firebase'
+import {
+    handleLike,
+    deletePost
+} from '../../firebase'
 
 // Icon imports
 import { IoMdThumbsUp } from 'react-icons/io'
+import { MdOutlineDelete } from 'react-icons/md'
 
 
 // Export the Post component
@@ -17,6 +21,7 @@ export default function Post(props) {
         authorUrl,
         desc,
         image,
+        storageLocation,
         tags,
         likes,
         id,
@@ -27,6 +32,7 @@ export default function Post(props) {
     // States
     const [liked, setLiked] = useState(false)
     const [likesCount, setLikesCount] = useState(likes)
+    const [initiateDelete, setInitiateDelete] = useState(false)
 
     // Likes the post 
     // then inverts the liked state and updates the likes count
@@ -49,6 +55,34 @@ export default function Post(props) {
     // Return the post
     return (
         <article className='Post'>
+            {profilePage &&
+                <button
+                    className='delete-button'
+                    onClick={() => setInitiateDelete(true)}
+                >
+                    <MdOutlineDelete />
+                </button>
+            }
+            {initiateDelete &&
+                <div className='delete-confirmation'>
+                    <p>Are you sure you want to delete this post?</p>
+                    <div className='confirmation-buttons'>
+                        <button
+                            id='confirmation-yes'
+                            onClick={() => {
+                                setInitiateDelete(false)
+                                deletePost(id, storageLocation)
+                                    //.then(window.location.reload())
+                                    .catch(err => console.log(err))
+                            }}
+                        >Yes</button>
+                        <button
+                            id='confirmation-no'
+                            onClick={() => setInitiateDelete(false)}
+                        >No</button>
+                    </div>
+                </div>
+            }
             <img src={image} alt={desc} />
             <div className='Post-info'>
                 <p>{desc}</p>

@@ -28,10 +28,12 @@ export default function Profile() {
         getUserPosts()
             .then(res => {
                 setPosts(res)
-                Object.keys(res).forEach((key) => {
-                    const { likes } = res[key];
-                    setLikes(prevLikes => prevLikes + likes)
-                })
+                if (res) {
+                    Object.keys(res).forEach((key) => {
+                        const { likes } = res[key];
+                        setLikes(prevLikes => prevLikes + likes)
+                    })
+                }
             })
 
         // Get the user's liked posts from the database
@@ -47,7 +49,7 @@ export default function Profile() {
     if (postsData) {
         posts = Object.keys(postsData).map((key, index) => {
             try {
-                const { author, authorId, authorUrl, desc, imageUrl, likes, tags, id } = postsData[key];
+                const { author, authorId, authorUrl, desc, imageUrl, storageLocation, likes, tags, id } = postsData[key];
                 if (postsData[key]) {
                     return (
                         <Post
@@ -57,6 +59,7 @@ export default function Profile() {
                             authorUrl={authorUrl}
                             desc={desc}
                             image={imageUrl}
+                            storageLocation={storageLocation}
                             likes={likes}
                             tags={tags}
                             id={id}
