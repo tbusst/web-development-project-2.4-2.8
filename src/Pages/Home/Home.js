@@ -9,12 +9,10 @@ import {
     getUserLikes
 } from '../../firebase';
 
-// Import icons
-import { IoMdCreate } from 'react-icons/io';
-
 // Components
 import Post from '../../Components/Post/Post';
 import Sidebar from '../../Components/Sidebar/Sidebar';
+import NewPostButton from '../../Components/NewPostButton/NewPostButton';
 
 // Export the Home page
 export default function Home() {
@@ -50,10 +48,11 @@ export default function Home() {
     let posts = []
     if (postsData) {
         posts = Object.keys(postsData).map((key, index) => {
-            const { author, authorUrl, desc, imageUrl, likes, tags, id } = postsData[key];
+            const { author, authorId, authorUrl, desc, imageUrl, likes, tags, id } = postsData[key];
             return (
                 <Post
                     author={author}
+                    authorId={authorId}
                     authorUrl={authorUrl}
                     desc={desc}
                     image={imageUrl}
@@ -66,6 +65,8 @@ export default function Home() {
             )
         });
     }
+    // reverse the posts so the newest posts are on top
+    const reversedPosts = posts.reverse();
 
     // Render the Home page
     return (
@@ -74,16 +75,10 @@ export default function Home() {
                 username={username}
                 profile={profileImage}
             />
-            {/* new post button */}
-            <button
-                className='new-post-button'
-                onClick={() => {
-                    window.location.href = '/new-post'
-                }}><IoMdCreate />
-            </button>
+            <NewPostButton />
             <section className='Posts'>
                 {/* if not posts are found, display a loading gif */}
-                {posts.length !== 0 && posts}
+                {posts.length !== 0 && reversedPosts}
                 {!posts.length &&
                     <img
                         className='loading-image'

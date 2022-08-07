@@ -27,8 +27,8 @@ export default function CreatePost() {
         e.preventDefault();
         const tagsList = tags.map(tag => tag.value);
         uploadImage(image)
-            .then(url => {
-                newPost(description, url, tagsList)
+            .then(res => {
+                newPost(description, res, tagsList)
                     .then(res => window.location.href = '/home')
             })
             .catch(err => console.log(err));
@@ -79,7 +79,7 @@ export default function CreatePost() {
                         >
                             <BiUpload />
                             <p>
-                                {hiddenFileInput.current?.files[0]?.name || 'Profile Picture'}
+                                {hiddenFileInput.current?.files[0]?.name || 'Upload Image'}
                             </p>
                         </button>
                         <input

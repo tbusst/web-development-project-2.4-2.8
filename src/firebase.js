@@ -8,7 +8,8 @@ import {
     getStorage,
     ref,
     uploadBytes,
-    getDownloadURL
+    getDownloadURL,
+    deleteObject
 } from "firebase/storage";
 import {
     getAuth,
@@ -88,7 +89,7 @@ const signUp = (email, password, username, profileImage) => {
                         .then(res => {
                             updateProfile(user, {
                                 displayName: username,
-                                photoURL: res
+                                photoURL: res[0]
                             }).then(() => resolve(user));
                         })
                         .catch(error => reject(error));
@@ -124,7 +125,8 @@ const getUser = () => {
 const imagesRef = ref(storage, 'images');
 const uploadImage = (image, userId) => {
     return new Promise((resolve, reject) => {
-        let imageRef = ref(imagesRef, `post/${Date.now()}:${image.name}`)
+        const imageName = `${Date.now()}: ${image.name}`
+        let imageRef = ref(imagesRef, `post/${imageName}`);
         if (userId) imageRef = ref(imagesRef, `user/${userId}`)
 
         // Upload image
@@ -133,7 +135,7 @@ const uploadImage = (image, userId) => {
                 logEvent(analytics, 'upload_image');
                 // Get image download url
                 getDownloadURL(imageRef)
-                    .then(url => resolve(url))
+                    .then(url => resolve([url, imageName]))
                     .catch(error => reject(error));
             })
             .catch(error => reject(error));
@@ -141,22 +143,22 @@ const uploadImage = (image, userId) => {
 }
 
 // Create a new post
-const newPost = (desc, imageUrl, tags) => {
+const newPost = (desc, res, tags) => {
     return new Promise((resolve, reject) => {
         getUser()
             .then(user => {
                 const newPostKey = push(child(refDatabase(database), 'posts')).key;
                 const postData = {
                     author: user.displayName,
+                    authorId: user.uid,
                     authorUrl: user.photoURL,
                     desc: desc,
-                    imageUrl: imageUrl,
+                    imageUrl: res[0],
+                    storageLocation: res[1],
                     likes: 0,
                     tags: tags,
                     id: newPostKey
                 }
-
-                console.log(newPostKey)
 
                 const updates = {};
                 updates['/posts/' + newPostKey] = postData;
@@ -195,20 +197,19 @@ const getUserPosts = () => {
 }
 
 // likes or unlikes a post based on the action bool
-const handleLike = (postId, action) => {
+const handleLike = (postId, authorId, action) => {
     return new Promise((resolve, reject) => {
         const amount = action ? 1 : -1;
         getUser()
             .then(user => {
                 const postRef = refDatabase(database, `posts/${postId}`);
-                const userPostRef = refDatabase(database, `user-posts/${user.uid}/${postId}`);
+                const userPostRef = refDatabase(database, `user-posts/${authorId}/${postId}`);
                 update(postRef, {
                     likes: increment(amount)
                 })
                 update(userPostRef, {
                     likes: increment(amount)
                 })
-                console.log(postId)
                 const postLikesRef = refDatabase(database, `users/${user.uid}/likedPosts/${postId}`);
                 if (action) {
                     const updates = {};
@@ -238,6 +239,26 @@ const getUserLikes = () => {
     })
 }
 
+const deletePost = (postId, storageLocation) => {
+    return new Promise((resolve, reject) => {
+        getUser()
+            .then(
+                user => {
+                    const postRef = refDatabase(database, `posts/${postId}`);
+                    const userPostRef = refDatabase(database, `user-posts/${user.uid}/${postId}`);
+                    if (storageLocation) {
+                        const imageRef = ref(storage, `images/post/${storageLocation}`);
+                        deleteObject(imageRef)
+                            .then(() => logEvent(analytics, 'delete_image'))
+                    }
+                    remove(postRef)
+                    remove(userPostRef)
+                        .then(resolve('Post deleted'))
+                }
+            )
+    })
+}
+
 // Export functions
 export {
     uploadImage,
@@ -249,5 +270,6 @@ export {
     getPosts,
     getUserPosts,
     getUserLikes,
-    handleLike
+    handleLike,
+    deletePost
 };
