@@ -72,7 +72,7 @@ export default function Post(props) {
                             onClick={() => {
                                 setInitiateDelete(false)
                                 deletePost(id, storageLocation)
-                                    //.then(window.location.reload())
+                                    .then(window.location.reload())
                                     .catch(err => console.log(err))
                             }}
                         >Yes</button>

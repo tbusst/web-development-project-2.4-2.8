@@ -24,3 +24,14 @@ body {
     right: -5px;
     background-color: $dark-navy;
 }
+
+select {
+    width: 100%;
+    margin: 10px 0;
+    top: 25px;
+    height: 45px;
+    border-radius: 5px;
+    font-size: 15px;
+    color: $yellow;
+    background-color: $dark-navy;
+}
