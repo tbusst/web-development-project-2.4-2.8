@@ -9,6 +9,7 @@
 @import './Components/Sidebar/Sidebar.scss';
 @import './Components/Post/Post.scss';
 @import './Components/ProfileBanner/ProfileBanner.scss';
+@import './Components/Loading/Loading.scss';
 
 * {
     margin: 0;
@@ -16,4 +17,10 @@
     font-weight: 700;
     font-style: normal;
     border: none;
+}
+
+button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

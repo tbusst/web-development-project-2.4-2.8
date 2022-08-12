@@ -1,6 +1,7 @@
 // Import components
 import Signin from '../../Components/Login/Signin';
 import Signup from '../../Components/Login/Signup';
+import Loading from "../../Components/Loading/Loading";
 
 import { useState, useEffect } from 'react';
 
@@ -11,6 +12,11 @@ export default function Login() {
     const urlParams = new URLSearchParams(queryString);
 
     const [mode, setMode] = useState(urlParams.get('mode'));
+    const [loading, setLoading] = useState(false);
+
+    const startLoading = () => {
+        setLoading(true);
+    }
 
     useEffect(() => {
         window.history.replaceState({}, '', '/login?mode=' + mode);
@@ -19,9 +25,10 @@ export default function Login() {
     // Render the Login page
     return (
         <main className='Login'>
+            {loading ? <Loading /> : null}
             {/* Displays sign in form or sign up form */}
-            {mode === 'signup' && <Signup setMode={setMode} />}
-            {mode === 'signin' && <Signin setMode={setMode} />}
+            {mode === 'signup' && <Signup setMode={setMode} startLoading={startLoading} />}
+            {mode === 'signin' && <Signin setMode={setMode} startLoading={startLoading} />}
         </main>
     );
 };

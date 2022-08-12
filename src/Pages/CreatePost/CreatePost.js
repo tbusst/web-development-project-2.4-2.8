@@ -4,6 +4,7 @@ import { BiUpload } from "react-icons/bi";
 import { FaArrowLeft } from "react-icons/fa";
 import Select from "react-select";
 import Sidebar from '../../Components/Sidebar/Sidebar';
+import Loading from "../../Components/Loading/Loading";
 
 export default function CreatePost() {
     const [description, setDescription] = useState('');
@@ -11,6 +12,7 @@ export default function CreatePost() {
     const [image, setImage] = useState('');
     const [username, setUsername] = useState([]);
     const [profileImage, setProfileImage] = useState([]);
+    const [loading, setLoading] = useState(false);
 
     const hiddenFileInput = useRef(null);
 
@@ -25,6 +27,11 @@ export default function CreatePost() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        if (loading) return;
+        if (description.trim() === '' || image === '') {
+            return alert('Please fill in all fields')
+        }
+        setLoading(true);
         const tagsList = tags.map(tag => tag.value);
         uploadImage(image)
             .then(res => {
@@ -48,6 +55,7 @@ export default function CreatePost() {
 
     return (
         <div className='CreatePost'>
+            {loading ? <Loading /> : null}
             <Sidebar
                 username={username}
                 profile={profileImage}

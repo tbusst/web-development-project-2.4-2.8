@@ -14,6 +14,7 @@ export default function Signin(props) {
     // Handles sign in
     const handleSubmit = (e) => {
         e.preventDefault();
+        props.startLoading();
         // Reset error message
         setError('')
 
