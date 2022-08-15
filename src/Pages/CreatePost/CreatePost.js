@@ -34,14 +34,8 @@ export default function CreatePost() {
         setLoading(true);
         const tagsList = tags.map(tag => tag.value);
 
-        switch (image.type) {
-            case 'image/jpeg':
-            case 'image/png':
-            case 'image/gif':
-            case 'image/ico':
-            case 'image/svg':
-            case 'image/apng':
-            case 'image/bmp':
+        switch (image.type.split('/')[0]) {
+            case 'image':
                 uploadImage(image)
                     .then(res => {
                         newPost(description, res, tagsList)
