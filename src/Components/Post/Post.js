@@ -16,6 +16,7 @@ import { MdOutlineDelete } from 'react-icons/md'
 // Export the Post component
 export default function Post(props) {
     const {
+        guest,
         author,
         authorId,
         authorUrl,
@@ -37,9 +38,13 @@ export default function Post(props) {
     // Likes the post 
     // then inverts the liked state and updates the likes count
     const handleLikeClick = (id) => {
-        handleLike(id, authorId, !liked)
-        setLiked(!liked)
-        setLikesCount(liked ? likesCount - 1 : likesCount + 1)
+        if (!guest) {
+            handleLike(id, authorId, !liked)
+            setLiked(!liked)
+            setLikesCount(liked ? likesCount - 1 : likesCount + 1)
+        } else {
+            alert('You must be logged in to like posts')
+        }
     }
 
     // Checks if the user has liked the post

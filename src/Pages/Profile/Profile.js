@@ -14,6 +14,7 @@ export default function Profile() {
     const [postsData, setPosts] = useState([]);
     const [likes, setLikes] = useState(0);
     const [userLikes, setUserLikes] = useState([]);
+    const [guest, setGuest] = useState(false);
 
     useEffect(() => {
         // Get the user's data from the database
@@ -22,7 +23,13 @@ export default function Profile() {
                 setUsername(res.displayName)
                 setProfileImage(res.photoURL)
             })
-            .catch(err => console.log(err))
+            .catch(() => {
+                setGuest(true)
+                setUsername('Guest')
+                setProfileImage(require(
+                    '../../Images/guest.png'
+                ))
+            })
 
         // Get the user's posts from the database
         getUserPosts()
@@ -53,6 +60,7 @@ export default function Profile() {
                 if (postsData[key]) {
                     return (
                         <Post
+                            guest={guest}
                             profilePage={true}
                             author={author}
                             authorId={authorId}

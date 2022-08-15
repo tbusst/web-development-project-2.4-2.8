@@ -24,6 +24,7 @@ export default function Home() {
     const [userLikes, setUserLikes] = useState([]);
     const [postOrder, setPostOrder] = useState(['latest']);
     const [orderedPosts, setOrderedPosts] = useState([]);
+    const [guest, setGuest] = useState(false);
 
     // Get posts from server and user data from Firebase
     useEffect(() => {
@@ -33,7 +34,14 @@ export default function Home() {
                 setUsername(res.displayName)
                 setProfileImage(res.photoURL)
             })
-            .catch(err => console.log(err))
+            .catch(() => {
+                setGuest(true)
+                setUsername('Guest')
+                setProfileImage(require(
+                    '../../Images/guest.png'
+                ))
+            })
+
 
         // Get the posts from the database
         getPosts()
@@ -54,6 +62,7 @@ export default function Home() {
                 const { author, authorId, authorUrl, desc, imageUrl, likes, tags, id } = postsData[key];
                 return (
                     <Post
+                        guest={guest}
                         author={author}
                         authorId={authorId}
                         authorUrl={authorUrl}
@@ -68,7 +77,7 @@ export default function Home() {
                 )
             })
         )
-    }, [postsData, userLikes])
+    }, [postsData, userLikes, guest])
 
     useEffect(() => {
         const postsArr = posts()
@@ -89,7 +98,7 @@ export default function Home() {
                 username={username}
                 profile={profileImage}
             />
-            <NewPostButton />
+            <NewPostButton guest={guest} />
             <section className='Posts'>
                 <select onChange={e => setPostOrder(e.target.value)}>
                     <option value='latest'>latest</option>
