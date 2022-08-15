@@ -2,6 +2,7 @@
 import Signin from '../../Components/Login/Signin';
 import Signup from '../../Components/Login/Signup';
 import Loading from "../../Components/Loading/Loading";
+import WarningBanner from '../../Components/WarningBanner/WarningBanner';
 
 import { useState, useEffect } from 'react';
 
@@ -26,6 +27,7 @@ export default function Login() {
     return (
         <main className='Login'>
             {loading ? <Loading /> : null}
+            <WarningBanner />
             {/* Displays sign in form or sign up form */}
             {mode === 'signup' && <Signup setMode={setMode} startLoading={startLoading} />}
             {mode === 'signin' && <Signin setMode={setMode} startLoading={startLoading} />}
