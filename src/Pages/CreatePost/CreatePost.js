@@ -33,12 +33,27 @@ export default function CreatePost() {
         }
         setLoading(true);
         const tagsList = tags.map(tag => tag.value);
-        uploadImage(image)
-            .then(res => {
-                newPost(description, res, tagsList)
-                    .then(res => window.location.href = '/home')
-            })
-            .catch(err => console.log(err));
+
+        switch (image.type) {
+            case 'image/jpeg':
+            case 'image/png':
+            case 'image/gif':
+            case 'image/ico':
+            case 'image/svg':
+            case 'image/apng':
+            case 'image/bmp':
+                uploadImage(image)
+                    .then(res => {
+                        newPost(description, res, tagsList)
+                            .then(res => window.location.href = '/home')
+                    })
+                    .catch(err => console.log(err));
+                break;
+            default:
+                alert('The file you uploaded is not a valid image')
+                setLoading(false)
+                break;
+        }
     }
 
     const options = [
@@ -94,6 +109,7 @@ export default function CreatePost() {
                             type='file'
                             id='profile'
                             ref={hiddenFileInput}
+                            accept="image/*"
                             onChange={async e => {
                                 // Get file
                                 let image = e.currentTarget.files[0];
