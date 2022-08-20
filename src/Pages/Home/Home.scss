@@ -23,6 +23,7 @@ body {
     top: 0;
     right: -5px;
     background-color: $dark-navy;
+    z-index: 1;
 }
 
 select {
@@ -34,4 +35,14 @@ select {
     font-size: 15px;
     color: $yellow;
     background-color: $dark-navy;
+}
+
+@media (max-width: 768px) {
+    select {
+        z-index: 1;
+        position: fixed;
+        width: calc(100% - 115px);
+        margin: 0 auto;
+        top: 0;
+    }
 }

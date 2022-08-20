@@ -1,11 +1,14 @@
 aside {
     position: fixed;
-    top: 0;
+    top: 5px;
     left: 0;
-    height: 100%;
     width: 75vw;
-    z-index: 10;
+    height: 100%;
+    z-index: 2;
+    //shadow on left
+    box-shadow: 3px 0 10px rgba(0, 0, 0, 0.8);
 
+    //pointer-events: none;
     button {
         color: $yellow;
         font-size: 25px;
@@ -13,11 +16,14 @@ aside {
     }
 
     #menu-button {
+        //box shadow on top right and bottom
         border-radius: 5px;
         font-size: 43px;
         height: 45px;
         width: 50px;
         padding: 0;
+        top: -5px;
+        left: calc(75vw - 5px);
         background-color: $dark-navy;
         text-align: center;
         position: relative;
@@ -75,6 +81,16 @@ aside {
                 border-radius: 100%;
                 object-fit: cover;
             }
+        }
+    }
+}
+
+@media (min-width: 768px) {
+    aside {
+        width: 25vw;
+
+        #menu-button {
+            left: calc(25vw - 5px);
         }
     }
 }

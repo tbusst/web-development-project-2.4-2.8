@@ -1,6 +1,6 @@
 .Posts {
     position: relative;
-    width: 50%;
+    width: 60%;
     margin: 0 auto;
 
     .Post {
@@ -35,19 +35,23 @@
 
         .Post-info {
             height: 150px;
-            display: grid;
-            grid-template-rows: 3fr 1fr;
+            width: 100%;
             text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
 
             p {
                 padding: 20px;
+                width: calc(100% - 40px);
             }
 
             .Post-stats {
                 display: flex;
-                padding: 5px;
                 align-items: center;
                 background-color: $dark-navy;
+                width: 100%;
+                height: 35px;
 
                 .vl {
                     border-left: 2px solid $navy;
@@ -80,16 +84,38 @@
 
                 .Post-tags {
                     display: flex;
-                    justify-content: center;
-                    height: 65%;
+                    align-items: center;
+                    height: 100%;
+                    overflow-x: auto;
+                    overflow-y: hidden;
 
                     .Tag {
+                        display: flex;
+                        align-items: center;
+                        height: 18px;
                         background-color: $navy;
                         padding: 1px 15px;
                         border-radius: 5px;
                         margin: 0 3px;
                         font-size: 13px;
                     }
+                }
+
+                //post-tags scrollbar
+                ::-webkit-scrollbar {
+                    height: 6px;
+                }
+
+                ::-webkit-scrollbar-track {
+                    background: $dark-navy;
+                }
+
+                ::-webkit-scrollbar-thumb {
+                    background: $navy;
+                }
+
+                ::-webkit-scrollbar-thumb:hover {
+                    background: $light-navy;
                 }
             }
         }
@@ -140,4 +166,15 @@
         }
     }
 
+}
+
+@media (max-width: 768px) {
+    .Posts {
+        width: 95%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-top: 57px;
+    }
 }
