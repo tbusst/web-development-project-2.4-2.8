@@ -51,6 +51,7 @@ export default function CreatePost() {
     }
 
     const options = [
+        { value: 'miscellaneous', label: 'Miscellaneous' },
         { value: 'landscape', label: 'Landscape' },
         { value: 'portrait', label: 'Portrait' },
         { value: 'nature', label: 'Nature' },
@@ -60,6 +61,18 @@ export default function CreatePost() {
         { value: 'travel', label: 'Travel' },
         { value: 'fashion', label: 'Fashion' },
         { value: 'sports', label: 'Sports' },
+        { value: 'tech', label: 'Tech' },
+        { value: 'art', label: 'Art' },
+        { value: 'science', label: 'Science' },
+        { value: 'education', label: 'Education' },
+        { value: 'feelings', label: 'Feelings' },
+        { value: 'health', label: 'Health' },
+        { value: 'places', label: 'Places' },
+        { value: 'religion', label: 'Religion' },
+        { value: 'history', label: 'History' },
+        { value: 'politics', label: 'Politics' },
+        { value: 'fashion', label: 'Fashion' },
+        { value: 'funny', label: 'Funny' },
     ]
 
     return (
