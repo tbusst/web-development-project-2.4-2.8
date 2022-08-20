@@ -14,6 +14,7 @@ import {
 import Post from '../../Components/Post/Post';
 import Sidebar from '../../Components/Sidebar/Sidebar';
 import NewPostButton from '../../Components/NewPostButton/NewPostButton';
+import Loading from '../../Components/Loading/Loading';
 
 // Export the Home page
 export default function Home() {
@@ -94,6 +95,9 @@ export default function Home() {
     // Render the Home page
     return (
         <main className='Home'>
+            {!posts().length &&
+                <Loading />
+            }
             <Sidebar
                 username={username}
                 profile={profileImage}
@@ -106,13 +110,6 @@ export default function Home() {
                 </select>
                 {/* if not posts are found, display a loading gif */}
                 {posts().length !== 0 && orderedPosts}
-                {!posts().length &&
-                    <img
-                        className='loading-image'
-                        src={require('../../Images/loading.jpg')}
-                        alt='loading'
-                    />
-                }
             </section>
         </main>
     );

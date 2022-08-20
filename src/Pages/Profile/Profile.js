@@ -6,6 +6,7 @@ import { getUser, getUserPosts, getUserLikes } from '../../firebase';
 import Sidebar from '../../Components/Sidebar/Sidebar';
 import ProfileBanner from '../../Components/ProfileBanner/ProfileBanner';
 import Post from '../../Components/Post/Post';
+import Loading from "../../Components/Loading/Loading";
 
 // Export the Profile page
 export default function Profile() {
@@ -85,6 +86,7 @@ export default function Profile() {
     // Return the profile page
     return (
         <main className='Profile'>
+            {!posts.length && <Loading />}
             <Sidebar
                 username={username}
                 profile={profileImage}
