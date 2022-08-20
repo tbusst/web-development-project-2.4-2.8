@@ -86,7 +86,7 @@ export default function Profile() {
     // Return the profile page
     return (
         <main className='Profile'>
-            {!posts.length && <Loading />}
+            {!guest && !posts.length && <Loading />}
             <Sidebar
                 username={username}
                 profile={profileImage}
