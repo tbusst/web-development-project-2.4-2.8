@@ -5,6 +5,7 @@ form {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    width: 80vw;
 
     h1 {
         font-size: 2.5rem;
@@ -14,7 +15,7 @@ form {
     }
 
     button {
-        width: calc(60vw + 20px);
+        width: 100%;
         height: 60px;
         padding: 0 10px;
         border: none;
@@ -61,7 +62,7 @@ form {
 }
 
 input {
-    width: 60vw;
+    width: calc(100% - 20px);
     height: 60px;
     border: 1px solid #ccc;
     border-radius: 10px;
@@ -81,7 +82,8 @@ input {
 
 .profile-image-container {
     display: flex;
-    width: calc(100% - 20px);
+    justify-content: space-between;
+    width: 100%;
     gap: 20px;
 
     input[type="file"] {
@@ -89,17 +91,20 @@ input {
     }
 
     button {
-        width: 10vw;
+        width: 30%;
         height: 60px;
     }
 
     p {
+        display: flex;
         font-size: 1.5rem;
         font-weight: bold;
         color: $yellow;
-        width: 50vw;
+        width: 100%;
         background-color: $dark-navy;
         text-align: center;
+        align-items: center;
+        justify-content: center;
         padding: 10px;
         border-radius: 10px;
     }

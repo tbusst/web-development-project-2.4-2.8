@@ -3,7 +3,8 @@ aside {
     top: 0;
     left: 0;
     height: 100%;
-    width: 18vw;
+    width: 75vw;
+    z-index: 10;
 
     button {
         color: $yellow;
@@ -17,20 +18,19 @@ aside {
         height: 45px;
         width: 50px;
         padding: 0;
-        left: -5px;
         background-color: $dark-navy;
         text-align: center;
         position: relative;
     }
 
     .Sidebar {
+        background-color: $dark-navy;
         position: relative;
         display: flex;
         flex-direction: column;
         text-align: center;
-        background-color: $dark-navy;
-        height: 100vh;
-        width: 18vw;
+        height: 100%;
+        width: 100%;
         top: -50px;
         font-size: 25px;
         justify-content: left;

@@ -14,8 +14,9 @@ export default function Login() {
     const [mode, setMode] = useState(urlParams.get('mode'));
     const [loading, setLoading] = useState(false);
 
-    const startLoading = () => {
-        setLoading(true);
+    const startLoading = (mode) => {
+        if (mode) setLoading(true);
+        else setLoading(false);
     }
 
     useEffect(() => {

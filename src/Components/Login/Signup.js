@@ -23,7 +23,7 @@ export default function Signup(props) {
     // Handles sign in
     const handleSubmit = (e) => {
         e.preventDefault();
-        props.startLoading();
+        props.startLoading(true);
         // Reset error message
         setError('')
 

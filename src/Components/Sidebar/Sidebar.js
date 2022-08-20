@@ -17,7 +17,7 @@ export default function Sidebar(props) {
     useEffect(() => {
         // Toggle the menu
         const button = document.getElementById('menu-button');
-        if (menuOpen) button.style.left = '17.8vw'
+        if (menuOpen) button.style.left = '74vw';
         else button.style.left = '-2px'
     }, [menuOpen]);
 

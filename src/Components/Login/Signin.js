@@ -14,7 +14,6 @@ export default function Signin(props) {
     // Handles sign in
     const handleSubmit = (e) => {
         e.preventDefault();
-        props.startLoading();
         // Reset error message
         setError('')
 
@@ -22,11 +21,15 @@ export default function Signin(props) {
         if (!email || !password) {
             setError('Please enter an email and password.');
         } else {
+            props.startLoading();
             // Calls sign in function
             signIn(email, password)
                 // Redirects to home page
                 .then(res => window.location.href = '/home')
-                .catch(err => setError(err))
+                .catch(err => {
+                    setError(err)
+                    props.startLoading(false);
+                })
 
         }
     }
