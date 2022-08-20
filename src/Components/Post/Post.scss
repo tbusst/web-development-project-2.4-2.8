@@ -139,6 +139,10 @@
     font-size: 2rem;
     font-weight: bold;
 
+    p {
+        text-align: center;
+    }
+
     .confirmation-buttons {
         display: flex;
         flex-direction: row;
@@ -176,5 +180,11 @@
         justify-content: center;
         align-items: center;
         margin-top: 57px;
+    }
+
+    .delete-confirmation {
+        .confirmation-buttons {
+            width: 90%;
+        }
     }
 }
