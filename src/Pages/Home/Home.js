@@ -80,8 +80,8 @@ export default function Home() {
                         )
                     })
                 )
-            } else return null
-        } catch (err) { return null };
+            } else return []
+        } catch (err) { return [] };
     }, [postsData, userLikes, guest])
 
     useEffect(() => {
