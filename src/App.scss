@@ -9,9 +9,19 @@
 @import './Components/Sidebar/Sidebar.scss';
 @import './Components/Post/Post.scss';
 @import './Components/ProfileBanner/ProfileBanner.scss';
+@import './Components/Loading/Loading.scss';
+@import './Components/WarningBanner/WarningBanner.scss';
 
 * {
     margin: 0;
-    font-family: sans-serif;
+    font-family: quicksand, sans-serif;
+    font-weight: 700;
+    font-style: normal;
     border: none;
+}
+
+button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

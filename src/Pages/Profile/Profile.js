@@ -6,6 +6,7 @@ import { getUser, getUserPosts, getUserLikes } from '../../firebase';
 import Sidebar from '../../Components/Sidebar/Sidebar';
 import ProfileBanner from '../../Components/ProfileBanner/ProfileBanner';
 import Post from '../../Components/Post/Post';
+import Loading from "../../Components/Loading/Loading";
 
 // Export the Profile page
 export default function Profile() {
@@ -14,6 +15,7 @@ export default function Profile() {
     const [postsData, setPosts] = useState([]);
     const [likes, setLikes] = useState(0);
     const [userLikes, setUserLikes] = useState([]);
+    const [guest, setGuest] = useState(false);
 
     useEffect(() => {
         // Get the user's data from the database
@@ -22,16 +24,24 @@ export default function Profile() {
                 setUsername(res.displayName)
                 setProfileImage(res.photoURL)
             })
-            .catch(err => console.log(err))
+            .catch(() => {
+                setGuest(true)
+                setUsername('Guest')
+                setProfileImage(require(
+                    '../../Images/guest.png'
+                ))
+            })
 
         // Get the user's posts from the database
         getUserPosts()
             .then(res => {
                 setPosts(res)
-                Object.keys(res).forEach((key) => {
-                    const { likes } = res[key];
-                    setLikes(prevLikes => prevLikes + likes)
-                })
+                if (res) {
+                    Object.keys(res).forEach((key) => {
+                        const { likes } = res[key];
+                        setLikes(prevLikes => prevLikes + likes)
+                    })
+                }
             })
 
         // Get the user's liked posts from the database
@@ -46,28 +56,37 @@ export default function Profile() {
     let posts = []
     if (postsData) {
         posts = Object.keys(postsData).map((key, index) => {
-            const { author, authorUrl, desc, imageUrl, likes, tags, id } = postsData[key];
-            if (postsData[key]) {
-                return (
-                    <Post
-                        author={author}
-                        authorUrl={authorUrl}
-                        desc={desc}
-                        image={imageUrl}
-                        likes={likes}
-                        tags={tags}
-                        id={id}
-                        userLikes={userLikes}
-                        key={index}
-                    />
-                )
-            } else return null;
+            try {
+                const { author, authorId, authorUrl, desc, imageUrl, storageLocation, likes, tags, id } = postsData[key];
+                if (postsData[key]) {
+                    return (
+                        <Post
+                            guest={guest}
+                            profilePage={true}
+                            author={author}
+                            authorId={authorId}
+                            authorUrl={authorUrl}
+                            desc={desc}
+                            image={imageUrl}
+                            storageLocation={storageLocation}
+                            likes={likes}
+                            tags={tags}
+                            id={id}
+                            userLikes={userLikes}
+                            key={index}
+                        />
+                    )
+                } else return null;
+            } catch (err) {
+                return null;
+            }
         });
     }
 
     // Return the profile page
     return (
         <main className='Profile'>
+            {!guest && postsData && !posts.length && <Loading />}
             <Sidebar
                 username={username}
                 profile={profileImage}

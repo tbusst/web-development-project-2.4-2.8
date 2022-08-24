@@ -17,13 +17,23 @@ export default function Sidebar(props) {
     useEffect(() => {
         // Toggle the menu
         const button = document.getElementById('menu-button');
-        if (menuOpen) button.style.left = '17.8vw'
-        else button.style.left = '-2px'
+        const aside = document.getElementById('aside');
+
+        if (menuOpen) {
+            aside.style.width = null;
+            button.style.left = null;
+            button.style.boxShadow = '0 0 10px rgba(0, 0, 0, 0.8)';
+        }
+        else {
+            button.style.left = '-5px'
+            aside.style.width = '0';
+            button.style.boxShadow = 'none';
+        }
     }, [menuOpen]);
 
     // Return the sidebar
     return (
-        <aside>
+        <aside id='aside'>
             {/* Open and close the menu */}
             <button
                 id='menu-button'

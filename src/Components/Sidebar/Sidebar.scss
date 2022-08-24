@@ -1,10 +1,14 @@
 aside {
     position: fixed;
-    top: 0;
+    top: 5px;
     left: 0;
+    width: 75vw;
     height: 100%;
-    width: 18vw;
+    z-index: 2;
+    //shadow on left
+    box-shadow: 3px 0 10px rgba(0, 0, 0, 0.8);
 
+    //pointer-events: none;
     button {
         color: $yellow;
         font-size: 25px;
@@ -12,25 +16,27 @@ aside {
     }
 
     #menu-button {
+        //box shadow on top right and bottom
         border-radius: 5px;
         font-size: 43px;
         height: 45px;
         width: 50px;
         padding: 0;
-        left: -5px;
+        top: -5px;
+        left: calc(75vw - 5px);
         background-color: $dark-navy;
         text-align: center;
         position: relative;
     }
 
     .Sidebar {
+        background-color: $dark-navy;
         position: relative;
         display: flex;
         flex-direction: column;
         text-align: center;
-        background-color: $dark-navy;
-        height: 100vh;
-        width: 18vw;
+        height: 100%;
+        width: 100%;
         top: -50px;
         font-size: 25px;
         justify-content: left;
@@ -73,7 +79,18 @@ aside {
                 width: 120px;
                 height: 120px;
                 border-radius: 100%;
+                object-fit: cover;
             }
+        }
+    }
+}
+
+@media (min-width: 768px) {
+    aside {
+        width: 25vw;
+
+        #menu-button {
+            left: calc(25vw - 5px);
         }
     }
 }

@@ -1,7 +1,8 @@
 // Import modules
 import {
     useEffect,
-    useState
+    useState,
+    useCallback
 } from 'react';
 import {
     getUser,
@@ -9,20 +10,22 @@ import {
     getUserLikes
 } from '../../firebase';
 
-// Import icons
-import { IoMdCreate } from 'react-icons/io';
-
 // Components
 import Post from '../../Components/Post/Post';
 import Sidebar from '../../Components/Sidebar/Sidebar';
+import NewPostButton from '../../Components/NewPostButton/NewPostButton';
+import Loading from '../../Components/Loading/Loading';
 
 // Export the Home page
 export default function Home() {
     // States
-    const [postsData, setPosts] = useState([]);
+    const [postsData, setPostsData] = useState([]);
     const [username, setUsername] = useState([]);
     const [profileImage, setProfileImage] = useState([]);
     const [userLikes, setUserLikes] = useState([]);
+    const [postOrder, setPostOrder] = useState(['latest']);
+    const [orderedPosts, setOrderedPosts] = useState([]);
+    const [guest, setGuest] = useState(false);
 
     // Get posts from server and user data from Firebase
     useEffect(() => {
@@ -32,11 +35,18 @@ export default function Home() {
                 setUsername(res.displayName)
                 setProfileImage(res.photoURL)
             })
-            .catch(err => console.log(err))
+            .catch(() => {
+                setGuest(true)
+                setUsername('Guest')
+                setProfileImage(require(
+                    '../../Images/guest.png'
+                ))
+            })
+
 
         // Get the posts from the database
         getPosts()
-            .then(res => setPosts(res))
+            .then(res => setPostsData(res))
 
         // Get the user's liked posts from the database
         getUserLikes()
@@ -47,50 +57,63 @@ export default function Home() {
     }, [])
 
     // Turns post data into Post components
-    let posts = []
-    if (postsData) {
-        posts = Object.keys(postsData).map((key, index) => {
-            const { author, authorUrl, desc, imageUrl, likes, tags, id } = postsData[key];
-            return (
-                <Post
-                    author={author}
-                    authorUrl={authorUrl}
-                    desc={desc}
-                    image={imageUrl}
-                    likes={likes}
-                    tags={tags}
-                    id={id}
-                    userLikes={userLikes}
-                    key={index}
-                />
-            )
-        });
-    }
+    const posts = useCallback(() => {
+        try {
+            if (postsData) {
+                return (
+                    Object.keys(postsData).map((key, index) => {
+                        const { author, authorId, authorUrl, desc, imageUrl, likes, tags, id } = postsData[key];
+                        return (
+                            <Post
+                                guest={guest}
+                                author={author}
+                                authorId={authorId}
+                                authorUrl={authorUrl}
+                                desc={desc}
+                                image={imageUrl}
+                                likes={likes}
+                                tags={tags}
+                                id={id}
+                                userLikes={userLikes}
+                                key={index}
+                            />
+                        )
+                    })
+                )
+            } else return []
+        } catch (err) { return [] };
+    }, [postsData, userLikes, guest])
+
+    useEffect(() => {
+        const postsArr = posts()
+        switch (postOrder) {
+            case 'oldest':
+                setOrderedPosts(postsArr)
+                break;
+            default:
+                setOrderedPosts(postsArr.reverse())
+                break;
+        }
+    }, [postOrder, posts])
 
     // Render the Home page
     return (
         <main className='Home'>
+            {!posts().length && postsData &&
+                <Loading />
+            }
             <Sidebar
                 username={username}
                 profile={profileImage}
             />
-            {/* new post button */}
-            <button
-                className='new-post-button'
-                onClick={() => {
-                    window.location.href = '/new-post'
-                }}><IoMdCreate />
-            </button>
+            <NewPostButton guest={guest} />
             <section className='Posts'>
+                <select onChange={e => setPostOrder(e.target.value)}>
+                    <option value='latest'>latest</option>
+                    <option value='oldest'>oldest</option>
+                </select>
                 {/* if not posts are found, display a loading gif */}
-                {posts.length !== 0 && posts}
-                {!posts.length &&
-                    <img
-                        className='loading-image'
-                        src={require('../../Images/loading.jpg')}
-                        alt='loading'
-                    />
-                }
+                {posts().length !== 0 && orderedPosts}
             </section>
         </main>
     );

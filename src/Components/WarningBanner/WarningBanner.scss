@@ -1,0 +1,16 @@
+.WarningBanner {
+    background-color: #f2dede;
+    border-color: #ebccd1;
+    color: #a94442;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    svg {
+        z-index: 1;
+        cursor: pointer;
+    }
+}

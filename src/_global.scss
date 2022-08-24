@@ -1,3 +1,5 @@
+@import url("https://use.typekit.net/xga7rtl.css");
+
 // Colors
 $light-yellow: #ffcc01;
 $yellow: #e3b706;
@@ -64,5 +66,15 @@ $dark-navy: #242b3e;
 
     to {
         background-color: $dark-navy;
+    }
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
     }
 }
