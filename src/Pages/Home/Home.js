@@ -58,26 +58,30 @@ export default function Home() {
 
     // Turns post data into Post components
     const posts = useCallback(() => {
-        return (
-            Object.keys(postsData).map((key, index) => {
-                const { author, authorId, authorUrl, desc, imageUrl, likes, tags, id } = postsData[key];
+        try {
+            if (postsData) {
                 return (
-                    <Post
-                        guest={guest}
-                        author={author}
-                        authorId={authorId}
-                        authorUrl={authorUrl}
-                        desc={desc}
-                        image={imageUrl}
-                        likes={likes}
-                        tags={tags}
-                        id={id}
-                        userLikes={userLikes}
-                        key={index}
-                    />
+                    Object.keys(postsData).map((key, index) => {
+                        const { author, authorId, authorUrl, desc, imageUrl, likes, tags, id } = postsData[key];
+                        return (
+                            <Post
+                                guest={guest}
+                                author={author}
+                                authorId={authorId}
+                                authorUrl={authorUrl}
+                                desc={desc}
+                                image={imageUrl}
+                                likes={likes}
+                                tags={tags}
+                                id={id}
+                                userLikes={userLikes}
+                                key={index}
+                            />
+                        )
+                    })
                 )
-            })
-        )
+            } else return null
+        } catch (err) { return null };
     }, [postsData, userLikes, guest])
 
     useEffect(() => {
@@ -95,7 +99,7 @@ export default function Home() {
     // Render the Home page
     return (
         <main className='Home'>
-            {!posts().length &&
+            {!posts().length && postsData &&
                 <Loading />
             }
             <Sidebar
